@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+:root {
+  --primary-colour: #661A25;
+  --secondary-colour: #1A1A1A;
+  --tertiary-colour: #AC8E65;
+
+  /* Desktop Font Sizes */
+  --heading-1-size: 3.125rem; /* 50px */
+  --heading-2-size: 2.5rem;   /* 40px */
+  --heading-3-size: 2rem;     /* 32px */
+  --heading-4-size: 1.5rem;   /* 24px */
+  --body-size: 1.125rem;      /* 18px */
+  --small-size: 0.875rem;     /* 14px */
+
+  /* Mobile Font Sizes */
+  --heading-1-size-sm: 2.5rem;  /* 40px */
+  --heading-2-size-sm: 2rem;    /* 32px */
+  --heading-3-size-sm: 1.5rem;  /* 24px */
+  --heading-4-size-sm: 1.25rem; /* 20px */
+  --body-size-sm: 1rem;         /* 16px */
+  --small-size-sm: 0.75rem;     /* 12px */
+}
+
+/* Text Colors */
+.primary-colour { color: var(--primary-colour); }
+.secondary-colour { color: var(--secondary-colour); }
+.tertiary-colour { color: var(--tertiary-colour); }
+
+/* Background Colors */
+.primary-bg { background-color: var(--primary-colour); }
+.secondary-bg { background-color: var(--secondary-colour); }
+.tertiary-bg { background-color: var(--tertiary-colour); }
+
+/* Default Font Sizes (for desktop) */
+.heading-1-size { font-size: var(--heading-1-size); }
+.heading-2-size { font-size: var(--heading-2-size); }
+.heading-3-size { font-size: var(--heading-3-size); }
+.heading-4-size { font-size: var(--heading-4-size); }
+.body-size { font-size: var(--body-size); }
+.small-size { font-size: var(--small-size); }
+
+/* Apply Mobile Font Sizes */
+@media (max-width: 576px) {
+  .heading-1-size { font-size: var(--heading-1-size-sm); }
+  .heading-2-size { font-size: var(--heading-2-size-sm); }
+  .heading-3-size { font-size: var(--heading-3-size-sm); }
+  .heading-4-size { font-size: var(--heading-4-size-sm); }
+  .body-size { font-size: var(--body-size-sm); }
+  .small-size { font-size: var(--small-size-sm); }
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+/* Responsive Width */
+.main-content {
+  margin: auto;
+  width: 80%;
+}
+
+@media (max-width: 992px) {
+  .main-content { width: 85%; }
+}
+
+@media (max-width: 768px) {
+  .main-content { width: 90%; }
+}
+
+@media (max-width: 576px) {
+  .main-content { width: 95%; }
+}

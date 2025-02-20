@@ -1,5 +1,6 @@
 import NavBar from "./components/NavBar";
-import { BrowserRouter } from 'react-router-dom';
+import ConsumerHomePage from "./pages/ConsumerHomePage";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
 
@@ -8,8 +9,13 @@ function App() {
     <div>
       <BrowserRouter>
         <NavBar />
+        <Routes>
+          <Route
+            path='/consumerHomePage'
+            element={<ConsumerHomePage />}
+          />
+        </Routes>
       </BrowserRouter>
-      <h1>test</h1>
     </div>
   );
 }

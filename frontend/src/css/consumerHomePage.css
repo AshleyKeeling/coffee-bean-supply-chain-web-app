@@ -1,0 +1,66 @@
+#consumer-logo {
+    width: clamp(100px, 15vw, 300px); /* Scales dynamically */
+}
+
+#search-bar {
+    margin: auto;
+    width: 60%;
+}
+
+@media (max-width: 992px) {
+    #search-bar {
+      width: 70%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #search-bar {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    #search-bar {
+      width: 100%;
+    }
+  }
+
+  .supply-chain-card {
+    position: relative;
+    width: 100%; 
+    /* border: 2px solid black; */
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    background-color: white;
+}
+
+.stage-number {
+    position: absolute;
+    padding: 0;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+    color: var(--tertiary-colour); 
+    border-radius: 5px;
+
+}
+
+.stage-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.stage-name {
+    display: block;
+    margin: 0.25rem 0;
+    padding: 0.25rem 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #661A25; /* Matches the dark red color */
+}
+
+#overview-heading {
+  /* margin-bottom: 5rem; */
+}

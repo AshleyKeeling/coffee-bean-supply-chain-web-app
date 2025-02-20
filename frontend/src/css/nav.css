@@ -1,0 +1,30 @@
+
+
+nav {
+    background-color: var(--primary-colour);
+    padding: 1rem 0;
+  }
+  
+  .nav-button {
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 0.25rem ;
+    align-items: center;
+    height: 50px;
+  }
+  
+  .nav-button img {
+    max-width: 40px;
+  }
+  
+  .nav-button h1 {
+    font-size: var(--body-size);
+    margin: 0;
+    padding: 0.25rem;
+  }
+  
+  

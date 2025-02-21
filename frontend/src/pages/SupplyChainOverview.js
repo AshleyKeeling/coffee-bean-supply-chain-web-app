@@ -23,7 +23,7 @@ const SupplyChainOverview = () => {
     ));
 
     return (
-        <div className="main-content">
+        <div className="main-content mb-4">
             <h1 className="heading-1-size my-3">Supply Chain Overview</h1>
             {supplyChainData}
         </div>

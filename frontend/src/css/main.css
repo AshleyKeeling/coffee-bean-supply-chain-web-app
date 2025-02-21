@@ -53,8 +53,10 @@
 /* Global Styles */
 body {
   margin: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Lato';
+  font-weight: 400;
 }
+
 
 /* Responsive Width */
 .main-content {

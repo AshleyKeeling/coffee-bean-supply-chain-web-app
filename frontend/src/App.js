@@ -1,6 +1,12 @@
-import NavBar from "./components/NavBar";
-import ConsumerHomePage from "./pages/ConsumerHomePage";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+// components
+import NavBar from "./components/NavBar";
+
+// pages
+import ConsumerHome from "./pages/ConsumerHome";
+import SupplyChainOverview from "./pages/SupplyChainOverview";
+
 
 
 
@@ -12,7 +18,11 @@ function App() {
         <Routes>
           <Route
             path='/consumerHomePage'
-            element={<ConsumerHomePage />}
+            element={<ConsumerHome />}
+          />
+          <Route
+            path='/supplyChainOverviewPage'
+            element={<SupplyChainOverview />}
           />
         </Routes>
       </BrowserRouter>

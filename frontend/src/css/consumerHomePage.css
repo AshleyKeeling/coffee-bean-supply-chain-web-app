@@ -48,19 +48,35 @@
 
 .stage-image {
     width: 100%;
+    aspect-ratio: 1/0.8;
+    object-fit: cover;
     height: auto;
     display: block;
 }
 
 .stage-name {
     display: block;
-    margin: 0.25rem 0;
-    padding: 0.25rem 0;
+    margin: 0.25rem 0 0 0;
+    padding: 0.15rem 0;
     font-size: 1.2rem;
     font-weight: bold;
     color: #661A25; /* Matches the dark red color */
 }
 
-#overview-heading {
-  /* margin-bottom: 5rem; */
+.image-control {
+  max-height: 400px; /* Prevents the image from becoming too tall */
+  width: 100%; /* Ensures it fits within the column */
+  object-fit: cover; /* Keeps aspect ratio */
+}
+
+@media (max-width: 992px) {
+  .image-control {
+      max-height: 350px; /* Slightly smaller on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .image-control {
+      max-height: 250px; /* Even smaller on smaller screens */
+  }
 }

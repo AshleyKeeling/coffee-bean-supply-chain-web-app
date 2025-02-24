@@ -7,6 +7,8 @@ import App from './App';
 import './css/main.css';
 import './css/nav.css';
 import './css/consumerHomePage.css';
+import './css/slideShow.css';
+import './css/participantHomePage.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

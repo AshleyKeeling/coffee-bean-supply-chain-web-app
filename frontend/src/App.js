@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar";
 // pages
 import ConsumerHome from "./pages/ConsumerHome";
 import SupplyChainOverview from "./pages/SupplyChainOverview";
+import ParticipantHome from './pages/ParticipantHome';
 
 
 
@@ -17,12 +18,16 @@ function App() {
         <NavBar />
         <Routes>
           <Route
-            path='/consumerHomePage'
+            path='/consumerHome'
             element={<ConsumerHome />}
           />
           <Route
             path='/supplyChainOverviewPage'
             element={<SupplyChainOverview />}
+          />
+          <Route
+            path='/participantHome'
+            element={<ParticipantHome />}
           />
         </Routes>
       </BrowserRouter>

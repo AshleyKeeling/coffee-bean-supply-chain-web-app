@@ -1,0 +1,16 @@
+.slider-container {
+    overflow: hidden; /* Prevents extra space */
+    /* padding: 20px 0; */
+    height: 200px;
+}
+
+.slide-wrapper {
+    padding: 0 10px; /* Adds gap between slides */
+}
+
+.slide-img {
+    width: 300px;  /* Ensures consistent size */
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}

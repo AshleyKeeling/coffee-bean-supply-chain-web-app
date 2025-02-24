@@ -16,7 +16,7 @@ const SupplyChainOverview = () => {
             key={index}
             number={index + 1}
             imageSRC={require(`../assets/images/${stage.image}`)}
-            imageALT="alt"
+            imageALT={stage.alt}
             stageName={stage.name}
             description={stage.description}
         />

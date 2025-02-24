@@ -1,22 +1,27 @@
-[
+{"details" : [
   {
     "name": "What We Do",
     "description": "Join us to track your coffee beans’ journey from cultivation to distribution using blockchain. Gain transparency, build trust, and improve the authenticity of your products.",
-    "image": "path/to/what-we-do-image.jpg"
+    "image": "location.jpg",
+    "alt" : "arial image of maps with location marks"
   },
   {
     "name": "How It Works",
     "description": "Easily track your beans, interact with smart contracts, and generate reports to ensure transparency throughout your supply chain.",
-    "image": "path/to/how-it-works-image.jpg"
+    "image": "smartContract.png",
+    "alt" : "image of smart contract and related icons"
   },
   {
     "name": "Why Blockchain?",
     "description": "Blockchain ensures your beans’ journey is secure, transparent, and traceable, helping you build trust and ensure accountability.",
-    "image": "path/to/why-blockchain-image.jpg"
+    "image": "blockchain.jpg",
+    "alt" : "image of blockchain text with icons surrounding it"
   },
   {
     "name": "Why Ethereum?",
     "description": "Ethereum provides a decentralized, tamper-proof ledger that guarantees transparency and trust throughout the supply chain, ensuring authenticity and traceability.",
-    "image": "path/to/why-ethereum-image.jpg"
+    "image": "ethereum.webp",
+    "alt" : "image of etherum text and logo"
   }
 ]
+}

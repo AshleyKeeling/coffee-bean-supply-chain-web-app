@@ -7,6 +7,8 @@ import NavBar from "./components/NavBar";
 import ConsumerHome from "./pages/ConsumerHome";
 import SupplyChainOverview from "./pages/SupplyChainOverview";
 import ParticipantHome from './pages/ParticipantHome';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
 
 
 
@@ -28,6 +30,14 @@ function App() {
           <Route
             path='/participantHome'
             element={<ParticipantHome />}
+          />
+          <Route
+            path='/signUp'
+            element={<SignUp />}
+          />
+          <Route
+            path='/signIn'
+            element={<SignIn />}
           />
         </Routes>
       </BrowserRouter>

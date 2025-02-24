@@ -20,6 +20,10 @@ function App() {
         <NavBar />
         <Routes>
           <Route
+            path='/'
+            element={<ConsumerHome />}
+          />
+          <Route
             path='/consumerHome'
             element={<ConsumerHome />}
           />

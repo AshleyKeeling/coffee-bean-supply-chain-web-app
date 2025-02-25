@@ -1,0 +1,19 @@
+#sign-up-in-form div, #sign-up-in-form button {
+    margin: 0.75rem 0 0 0;
+}
+
+#sign-up-in-form div:last-of-type input {
+    margin-right: 0.75rem;
+}
+
+
+#sign-up-in-form input, #sign-up-in-form select {
+    border: black solid 1px;
+    font-size: larger;
+}
+
+input::placeholder {
+    color: #7A7A7A; /* Change text color */
+    font-weight: 400;
+    opacity: 1; /* Ensure visibility */
+}

@@ -8,7 +8,8 @@ import './css/main.css';
 import './css/nav.css';
 import './css/consumerHomePage.css';
 import './css/slideShow.css';
-import './css/participantHomePage.css'
+import './css/participantHomePage.css';
+import './css/signInAndSignUp.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

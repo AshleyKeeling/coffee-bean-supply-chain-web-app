@@ -9,9 +9,7 @@ import SupplyChainOverview from "./pages/SupplyChainOverview";
 import ParticipantHome from './pages/ParticipantHome';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
-
-
-
+import BatchTimeline from './pages/BatchTimeline';
 
 function App() {
   return (
@@ -31,6 +29,11 @@ function App() {
             path='/supplyChainOverviewPage'
             element={<SupplyChainOverview />}
           />
+          <Route
+            path='/batchTimeline'
+            element={<BatchTimeline />}
+          />
+
           <Route
             path='/participantHome'
             element={<ParticipantHome />}

@@ -13,6 +13,7 @@ import exporting from '../assets/images/exporting.jpeg';
 import roasting from '../assets/images/roasting.jpeg';
 import packaging from '../assets/images/packaging.jpeg';
 import distribution from '../assets/images/distribution.jpeg';
+import { Link } from "react-router-dom";
 
 
 
@@ -32,7 +33,7 @@ const ConsumerHome = () => {
                         className="border-start-0"
                     />
                     <Button variant="dark" style={{ backgroundColor: "#661A25", border: "none", borderRadius: "5px" }} className='px-4'>
-                        Search
+                        <Link to="/batchTimeline" className="text-decoration-none text-white">Search</Link>
                     </Button>
                 </InputGroup>
             </div>

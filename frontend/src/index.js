@@ -10,6 +10,7 @@ import './css/consumerHomePage.css';
 import './css/slideShow.css';
 import './css/participantHomePage.css';
 import './css/signInAndSignUp.css';
+import './css/batchTimeline.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -12,6 +12,9 @@ import SignIn from './pages/SignIn';
 import BatchTimeline from './pages/BatchTimeline';
 import ManagerDashboard from './pages/ManagerDashboard';
 import ParticipantDashboard from './pages/ParticipantDashboard';
+import NewBatch from './pages/NewBatch';
+import NewSupplyChain from './pages/NewSupplyChain';
+import UpdateBatch from './pages/UpdateBatch';
 
 function App() {
   return (
@@ -32,7 +35,11 @@ function App() {
 
           {/* --- Protected routes (particiapnts and managers) --- */}
           <Route path="/managerDashboard" element={<ManagerDashboard />} />
+          <Route path="/managerDashboard/newBatch" element={<NewBatch />} />
+          <Route path="/managerDashboard/newSupplyChain" element={<NewSupplyChain />} />
+
           <Route path="/participantDashboard" element={<ParticipantDashboard />} />
+          <Route path="/participantDashboard/updateBatch" element={<UpdateBatch />} />
         </Routes>
       </BrowserRouter>
     </div>

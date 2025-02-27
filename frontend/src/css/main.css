@@ -78,3 +78,9 @@ hr {
 @media (max-width: 576px) {
   .main-content { width: 95%; }
 }
+
+/* Ultra wide monitiors */
+
+@media (min-width: 1536px) {
+  .main-content { width: 50% ;}
+}

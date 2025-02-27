@@ -1,0 +1,25 @@
+progress {
+    width: 100%;
+    height: 10px;
+    border-radius: 0px;
+    background-color: #F2F2F2; /* Track color */
+}
+
+progress::-webkit-progress-bar {
+    background-color: #F2F2F2; /* Track color for WebKit */
+    border-radius: 0px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #AC8E65; /* Progress color */
+    border-radius: 0px;
+}
+
+progress::-moz-progress-bar {
+    background-color: #AC8E65; /* Progress color for Firefox */
+    border-radius: 0px;
+}
+
+.products-table {
+    border-collapse: separate;
+}

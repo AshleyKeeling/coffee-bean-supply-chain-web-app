@@ -11,6 +11,7 @@ import './css/slideShow.css';
 import './css/participantHomePage.css';
 import './css/signInAndSignUp.css';
 import './css/batchTimeline.css';
+import './css/supplyChainDetails.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

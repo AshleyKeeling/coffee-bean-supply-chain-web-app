@@ -10,6 +10,8 @@ import ParticipantHome from './pages/ParticipantHome';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import BatchTimeline from './pages/BatchTimeline';
+import ManagerDashboard from './pages/ManagerDashboard';
+import ParticipantDashboard from './pages/ParticipantDashboard';
 
 function App() {
   return (
@@ -17,35 +19,20 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route
-            path='/'
-            element={<ConsumerHome />}
-          />
-          <Route
-            path='/consumerHome'
-            element={<ConsumerHome />}
-          />
-          <Route
-            path='/supplyChainOverviewPage'
-            element={<SupplyChainOverview />}
-          />
-          <Route
-            path='/batchTimeline'
-            element={<BatchTimeline />}
-          />
+          {/* --- Consumer routes --- */}
+          <Route path='/' element={<ConsumerHome />} />
+          <Route path='/consumerHome' element={<ConsumerHome />} />
+          <Route path='/supplyChainOverviewPage' element={<SupplyChainOverview />} />
+          <Route path='/batchTimeline' element={<BatchTimeline />} />
 
-          <Route
-            path='/participantHome'
-            element={<ParticipantHome />}
-          />
-          <Route
-            path='/signUp'
-            element={<SignUp />}
-          />
-          <Route
-            path='/signIn'
-            element={<SignIn />}
-          />
+          {/* --- Participant Routes --- */}
+          <Route path='/participantHome' element={<ParticipantHome />} />
+          <Route path='/signUp' element={<SignUp />} />
+          <Route path='/signIn' element={<SignIn />} />
+
+          {/* --- Protected routes (particiapnts and managers) --- */}
+          <Route path="/managerDashboard" element={<ManagerDashboard />} />
+          <Route path="/participantDashboard" element={<ParticipantDashboard />} />
         </Routes>
       </BrowserRouter>
     </div>

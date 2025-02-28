@@ -84,3 +84,7 @@ hr {
 @media (min-width: 1536px) {
   .main-content { width: 50% ;}
 }
+
+.button:hover {
+  background-color: #AC8E65;
+}

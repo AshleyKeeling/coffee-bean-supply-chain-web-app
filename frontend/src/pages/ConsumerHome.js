@@ -32,8 +32,8 @@ const ConsumerHome = () => {
                         placeholder="Search Product ID or Smart Contract Address"
                         className="border-start-0"
                     />
-                    <Button variant="dark" style={{ backgroundColor: "#661A25", border: "none", borderRadius: "5px" }} className='px-4'>
-                        <Link to="/batchTimeline" className="text-decoration-none text-white">Search</Link>
+                    <Button className='px-4 primary-bg rounded button border-0'>
+                        <Link to="/batchTimeline" className="text-decoration-none text-white ">Search</Link>
                     </Button>
                 </InputGroup>
             </div>

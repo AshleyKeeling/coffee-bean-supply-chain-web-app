@@ -16,8 +16,8 @@ nav {
 }
 
 .nav-button:hover {
-  background-color: white;
-  color: black;
+  background-color: #AC8E65;
+  /* color: black; */
 }
 
 /* .nav-button:active {

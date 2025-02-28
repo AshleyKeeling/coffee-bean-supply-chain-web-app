@@ -1,5 +1,10 @@
 const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
 
+// create JWT token
+const createToken = (_id) => {
+    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
+}
 
 // sign up
 const signupUser = async (req, res) => {
@@ -8,9 +13,11 @@ const signupUser = async (req, res) => {
     try {
         // adds user to database with validation checks
         const user = await User.signup(email, password, role, ethereum_address);
-        // create JWT token
 
-        res.status(200).json({ message: "user created " })
+        // create JWT token
+        const token = createToken(user._id);
+
+        res.status(200).json({ email, token })
 
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -27,8 +34,9 @@ const signinUser = async (req, res) => {
         const user = await User.signin(email, password);
 
         // create JWT token
+        const token = createToken(user._id);
 
-        res.status(200).json({ message: "user signed in" })
+        res.status(200).json({ email, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

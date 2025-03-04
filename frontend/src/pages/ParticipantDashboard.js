@@ -1,7 +1,7 @@
 const ParticipantDashboard = () => {
     return (
-        <div>
-
+        <div className="main-content">
+            <h1>ParticipantDashboard</h1>
         </div>
     )
 }

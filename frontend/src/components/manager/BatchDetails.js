@@ -16,7 +16,7 @@ const BatchDetails = () => {
                     {/* smart contract address */}
                     <div className="body-size text-white">
                         <strong>Smart Contract Address: </strong>
-                        <span style={{ fontWeight: "300", wordBreak: "break-word" }}>
+                        <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
                             0xABCDEF1234567890ABCDEF1234567890ABCDEF12
                         </span>
                     </div>
@@ -24,7 +24,7 @@ const BatchDetails = () => {
                     {/* Status */}
                     <div className="body-size text-white">
                         <strong>Status: </strong>
-                        <span style={{ fontWeight: "300", wordBreak: "break-word" }}>
+                        <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
                             Currently drying
                         </span>
                     </div>
@@ -32,7 +32,7 @@ const BatchDetails = () => {
                     {/* Batch Quantity */}
                     <div className="body-size text-white">
                         <strong>Batch Quantity: </strong>
-                        <span style={{ fontWeight: "300", wordBreak: "break-word" }}>
+                        <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
                             5
                         </span>
                     </div>
@@ -40,7 +40,7 @@ const BatchDetails = () => {
                     {/* Creation Date */}
                     <div className="body-size text-white">
                         <strong>Creation Date: </strong>
-                        <span style={{ fontWeight: "300", wordBreak: "break-word" }}>
+                        <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
                             23/01/2025, 15:45:00
                         </span>
                     </div>
@@ -48,7 +48,7 @@ const BatchDetails = () => {
                     {/* latest update */}
                     <div className="body-size text-white">
                         <strong>Latest Update: </strong>
-                        <span style={{ fontWeight: "300", wordBreak: "break-word" }}>
+                        <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
                             09/02/2025, 17:06:32
                         </span>
                     </div>

@@ -15,11 +15,6 @@ const SignIn = () => {
         e.preventDefault()
 
         await signin(email, password);
-        // alert(`
-        //     Email: ${email}
-        //     Password: ${password}
-        //     Keep Signed In: ${keepSignedIn ? "Yes" : "No"}
-        //     `);
     }
 
     return (

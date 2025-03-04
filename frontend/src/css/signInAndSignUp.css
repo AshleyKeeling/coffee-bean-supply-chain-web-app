@@ -17,3 +17,16 @@ input::placeholder {
     font-weight: 400;
     opacity: 1; /* Ensure visibility */
 }
+
+
+div.error {
+    padding: 10px;
+    background: #ffefef;
+    border: 1px solid #e7195a;
+    color: #e7195a;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  input.error, select.error {
+    border: 1px solid #e7195a;
+  }

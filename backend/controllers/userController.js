@@ -10,11 +10,11 @@ const createToken = (_id) => {
 
 // sign up
 const signupUser = async (req, res) => {
-    const { email, password, role, ethereum_address } = req.body;
+    const { email, password, confirmPassword, role, ethereum_address } = req.body;
 
     try {
         //  validation checks
-        if (!email || !password || !role || !ethereum_address) {
+        if (!email || !password || !confirmPassword || !role || !ethereum_address) {
             return res.status(400).json({ error: "All fields must be filled" });
         }
         if (!validator.isEmail(email)) {
@@ -22,6 +22,9 @@ const signupUser = async (req, res) => {
         }
         if (!validator.isStrongPassword(password)) {
             return res.status(400).json({ error: "Weak password" });
+        }
+        if (password != confirmPassword) {
+            return res.status(400).json({ error: "Password and confirm password do not match" });
         }
         if (!validator.isEthereumAddress(ethereum_address)) {
             return res.status(400).json({ error: "Invalid Ethereum address" });

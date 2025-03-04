@@ -1,5 +1,5 @@
 import { useState } from "react"
-// import { useSignup } from "../Hooks/useSignup";
+import { useSignup } from "../hooks/useSignup";
 
 import coffeeOutside from '../assets/images/coffeeOutside.jpg';
 import { Link } from "react-router-dom";
@@ -12,26 +12,19 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [keepSignedIn, setKeepSignedIn] = useState(false);
 
-    // const { signup, error, isLoading } = useSignup();
+    const { signup, error, isLoading } = useSignup();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // await signup(email, password);
-        alert(`
-            Email: ${email}
-            Ethereum Address: ${ethereumAddress}
-            Role Type: ${roleType}
-            Password: ${password}
-            Confirm Password: ${confirmPassword}
-            Keep Signed In: ${keepSignedIn ? "Yes" : "No"}
-            `);
+        await signup(email, password, confirmPassword, roleType, ethereumAddress);
     }
 
     return (
         <div className="main-content row">
             <h1 className="heading-1-size mt-5">Create Account</h1>
-            <form className="col-12 col-md-6" id="sign-up-in-form" onSubmit={handleSubmit}>
+            <form className="col-12 col-md-6 signup" id="sign-up-in-form" onSubmit={handleSubmit}>
+
                 <div>
                     <label className="heading-4-size">Email</label>
                     <input
@@ -101,11 +94,8 @@ const SignUp = () => {
                     <label className="body-size">keep me signed in?</label>
                 </div>
 
-
-                <button className="button border primary-bg text-white rounded text-center py-3 w-100">Sign Up</button>
-
-                {/* <button disabled={isLoading} className="btn btn-primary mt-2 mb-3">Sign Up</button> */}
-                {/* {error && <div className="error">{error}</div>} */}
+                <button disabled={isLoading} className="button border primary-bg text-white rounded text-center py-3 w-100">Sign Up</button>
+                {error && <div className="error">{error}</div>}
 
                 <hr />
                 <span className="d-flex justify-content-center mb-3">Already have an account? <Link to="/signIn" className="text-decoration-none text-black ms-2"><strong>Sign In</strong></Link></span>

@@ -3,25 +3,23 @@ import { useState } from "react"
 
 import coffeeSupplyChain from '../assets/images/coffeeSupplyChain.png';
 import { Link } from "react-router-dom";
+import { useSignin } from "../hooks/useSignin";
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
-
     const [password, setPassword] = useState('');
-
     const [keepSignedIn, setKeepSignedIn] = useState(false);
-
-    // const { signup, error, isLoading } = useSignup();
+    const { signin, error, isLoading } = useSignin();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // await signup(email, password);
-        alert(`
-            Email: ${email}
-            Password: ${password}
-            Keep Signed In: ${keepSignedIn ? "Yes" : "No"}
-            `);
+        await signin(email, password);
+        // alert(`
+        //     Email: ${email}
+        //     Password: ${password}
+        //     Keep Signed In: ${keepSignedIn ? "Yes" : "No"}
+        //     `);
     }
 
     return (
@@ -65,10 +63,8 @@ const SignIn = () => {
                     <p className="body-size mb-0"><strong>Forgot Your Password?</strong></p>
                 </div>
 
-                <button className="button border primary-bg text-white rounded text-center py-3 w-100">Sign In</button>
-
-                {/* <button disabled={isLoading} className="btn btn-primary mt-2 mb-3">Sign Up</button> */}
-                {/* {error && <div className="error">{error}</div>} */}
+                <button disabled={isLoading} className="button border primary-bg text-white rounded text-center py-3 w-100">Sign In</button>
+                {error && <div className="error">{error}</div>}
 
                 <hr />
                 <span className="d-flex justify-content-center mb-3">Don't have an account? <Link to="/signUp" className="text-decoration-none text-black ms-2"><strong>Sign Up</strong></Link></span>

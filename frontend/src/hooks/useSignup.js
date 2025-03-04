@@ -1,18 +1,17 @@
 import { useState } from "react";
 
-export const useSignin = () => {
+export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
 
-
-    const signin = async (email, password) => {
+    const signup = async (email, password, confirmPassword, role, ethereum_address) => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch('/api/user/signin', {
+        const response = await fetch('/api/user/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password, confirmPassword, role, ethereum_address })
         })
 
         const json = await response.json();
@@ -23,11 +22,12 @@ export const useSignin = () => {
         }
 
         if (response.ok) {
-            // save JWT to local storage
+            // save the user to local storage (jwt token)
             localStorage.setItem('user', JSON.stringify(json))
 
             setIsLoading(false);
         }
     }
-    return { signin, error, isLoading }
+
+    return { signup, isLoading, error }
 }

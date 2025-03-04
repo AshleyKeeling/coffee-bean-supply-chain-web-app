@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { useAuthContext } from './hooks/useAuthContext';
 
 // components
 import NavBar from "./components/NavBar";
@@ -17,6 +18,8 @@ import NewSupplyChain from './pages/NewSupplyChain';
 import UpdateBatch from './pages/UpdateBatch';
 
 function App() {
+  const { user } = useAuthContext();
+
   return (
     <div>
       <BrowserRouter>
@@ -30,16 +33,16 @@ function App() {
 
           {/* --- Participant Routes --- */}
           <Route path='/participantHome' element={<ParticipantHome />} />
-          <Route path='/signUp' element={<SignUp />} />
-          <Route path='/signIn' element={<SignIn />} />
+          <Route path='/signUp' element={!user ? <SignUp /> : user.role === "Manager" ? <Navigate to="/managerDashboard" /> : <Navigate to="/participantDashboard" />} />
+          <Route path='/signIn' element={!user ? <SignIn /> : user.role === "Manager" ? <Navigate to="/managerDashboard" /> : <Navigate to="/participantDashboard" />} />
 
           {/* --- Protected routes (particiapnts and managers) --- */}
-          <Route path="/managerDashboard" element={<ManagerDashboard />} />
-          <Route path="/managerDashboard/newBatch" element={<NewBatch />} />
-          <Route path="/managerDashboard/newSupplyChain" element={<NewSupplyChain />} />
+          <Route path="/managerDashboard" element={user && user.role === "Manager" ? <ManagerDashboard /> : <Navigate to="/participantHome" />} />
+          <Route path="/managerDashboard/newBatch" element={user && user.role === "Manager" ? <NewBatch /> : <Navigate to="/participantHome" />} />
+          <Route path="/managerDashboard/newSupplyChain" element={user && user.role === "Manager" ? <NewSupplyChain /> : <Navigate to="/participantHome" />} />
 
-          <Route path="/participantDashboard" element={<ParticipantDashboard />} />
-          <Route path="/participantDashboard/updateBatch" element={<UpdateBatch />} />
+          <Route path="/participantDashboard" element={user && user.role !== "Manager" ? <ParticipantDashboard /> : <Navigate to="/participantHome" />} />
+          <Route path="/participantDashboard/updateBatch" element={user && user.role !== "Manager" ? <UpdateBatch /> : <Navigate to="/participantHome" />} />
         </Routes>
       </BrowserRouter>
     </div>

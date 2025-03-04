@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useAuthContext } from './useAuthContext'
+
 
 export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
+    const { dispatch } = useAuthContext();
+
 
     const signup = async (email, password, confirmPassword, role, ethereum_address) => {
         setIsLoading(true);
@@ -24,6 +28,9 @@ export const useSignup = () => {
         if (response.ok) {
             // save the user to local storage (jwt token)
             localStorage.setItem('user', JSON.stringify(json))
+
+            // update Auth Context
+            dispatch({ type: 'SIGNIN', payload: json })
 
             setIsLoading(false);
         }

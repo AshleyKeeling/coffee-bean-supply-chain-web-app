@@ -12,11 +12,14 @@ import './css/participantHomePage.css';
 import './css/signInAndSignUp.css';
 import './css/batchTimeline.css';
 import './css/supplyChainDetails.css'
+import { AuthContextProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
   </React.StrictMode>
 );
 

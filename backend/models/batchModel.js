@@ -19,7 +19,7 @@ const batchModel = new Schema({
         {
             role: {
                 type: String,
-                enum: ['Farmer', 'Harvestor', 'Processor', 'Drying Specialist', 'Exporter', 'Roaster', 'Packaging Specialist', 'Distributor'],
+                enum: ['Manager', 'Farmer', 'Harvestor', 'Processor', 'Drying Specialist', 'Exporter', 'Roaster', 'Packaging Specialist', 'Distributor'],
                 required: true
             },
             ethereum_address: {

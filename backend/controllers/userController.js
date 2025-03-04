@@ -46,7 +46,7 @@ const signupUser = async (req, res) => {
         // create JWT token
         const token = createToken(user._id);
 
-        res.status(200).json({ email, token });
+        res.status(200).json({ email, role, token });
 
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -75,10 +75,12 @@ const signinUser = async (req, res) => {
             return res.status(400).json({ error: "Incorrect Password" });
         }
 
+        const userRole = user.role;
+
         // create JWT token
         const token = createToken(user._id);
 
-        res.status(200).json({ email, token })
+        res.status(200).json({ email, role: user.role, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

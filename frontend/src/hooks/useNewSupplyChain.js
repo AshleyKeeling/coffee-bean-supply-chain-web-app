@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthContext } from "./useAuthContext";
 
 export const useNewSupplyChain = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
     const navigate = useNavigate();
+    const { user } = useAuthContext();
+
 
     const newSupplyChain = async (supply_chain_id) => {
         setIsLoading(true);
@@ -13,7 +15,7 @@ export const useNewSupplyChain = () => {
 
         const response = await fetch('/api/supplyChain/new', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` },
             body: JSON.stringify({ supply_chain_id })
         })
 

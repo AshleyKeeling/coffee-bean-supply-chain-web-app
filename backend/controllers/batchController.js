@@ -1,4 +1,5 @@
 const Batch = require('../models/batchModel');
+const Product = require('../models/productModel');
 const { newProduct } = require('./productController');
 const { doesSupplyChainExist } = require('./supplyChainController');
 const validator = require('validator');
@@ -54,13 +55,34 @@ const newBatch = async (req, res) => {
             const product = await newProduct(productData);
             products.push(product);
         }
-
-
-
         res.status(200).json({ newBatch, products });
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
-module.exports = { newBatch };
+const getAllBatches = async (req, res) => {
+    console.log(req.user);
+
+
+    try {
+        const managerEthereumAddress = req.user.ethereum_address
+
+        const batches = await Batch.find({ "participant_addresses.role": "Manager", "participant_addresses.ethereum_address": managerEthereumAddress });
+        for (let i = 0; i < batches.length; i++) {
+            const batch_smart_contract_address = batches[i].smart_contract_address;
+            const products = await Product.find({ smart_contract_address: batch_smart_contract_address })
+
+            // Convert Mongoose document to plain object to allow modification
+            batches[i] = batches[i].toObject();
+            batches[i].products = products;
+        }
+
+        // sends batches as json
+        res.status(200).json(batches);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+module.exports = { newBatch, getAllBatches };

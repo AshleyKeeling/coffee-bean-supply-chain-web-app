@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import React from 'react';
 
-
-const BatchDetails = () => {
+const BatchDetails = ({ smartContractAddress, status, batchQuantity, creationDate, latestUpdate, products }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="primary-bg rounded p-2">
+        <div className="primary-bg rounded p-2 mb-2">
             <div className="row">
                 <div className="col-12 col-md-8 mb-2">
                     {/* progress bar */}
@@ -17,7 +17,7 @@ const BatchDetails = () => {
                     <div className="body-size text-white">
                         <strong>Smart Contract Address: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            0xABCDEF1234567890ABCDEF1234567890ABCDEF12
+                            {smartContractAddress}
                         </span>
                     </div>
 
@@ -25,7 +25,7 @@ const BatchDetails = () => {
                     <div className="body-size text-white">
                         <strong>Status: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            Currently drying
+                            {status}
                         </span>
                     </div>
 
@@ -33,7 +33,7 @@ const BatchDetails = () => {
                     <div className="body-size text-white">
                         <strong>Batch Quantity: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            5
+                            {batchQuantity}
                         </span>
                     </div>
 
@@ -41,7 +41,7 @@ const BatchDetails = () => {
                     <div className="body-size text-white">
                         <strong>Creation Date: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            23/01/2025, 15:45:00
+                            {creationDate}
                         </span>
                     </div>
 
@@ -49,7 +49,8 @@ const BatchDetails = () => {
                     <div className="body-size text-white">
                         <strong>Latest Update: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            09/02/2025, 17:06:32
+                            {/* 09/02/2025, 17:06:32 */}
+                            {latestUpdate}
                         </span>
                     </div>
                 </div>
@@ -81,24 +82,25 @@ const BatchDetails = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style={{ fontWeight: "300", wordBreak: "break-word" }}>
-                            <td>CB-20250209-XYZ12345</td>
-                            <td>In-Progress</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><hr style={{ border: "none", borderTop: "2px solid white", opacity: 1 }} /></td>
-                        </tr>
-                        <tr style={{ fontWeight: "300", wordBreak: "break-word" }}>
-                            <td>CB-20250209-XYZ12345</td>
-                            <td>In-Progress</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><hr style={{ border: "none", borderTop: "2px solid white", opacity: 1 }} /></td>
-                        </tr>
-                        <tr style={{ fontWeight: "300", wordBreak: "break-word" }}>
-                            <td>CB-20250209-XYZ12345</td>
-                            <td>In-Progress</td>
-                        </tr>
+                        {products && products.length > 0 ? (
+                            products.map((product, index) => (
+                                <React.Fragment key={index}>
+                                    <tr style={{ fontWeight: "300", wordBreak: "break-word" }}>
+                                        <td>{product.product_id}</td>
+                                        <td>{product.status}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="2">
+                                            <hr style={{ border: "none", borderTop: "2px solid white", opacity: 1 }} />
+                                        </td>
+                                    </tr>
+                                </React.Fragment>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="2" className="text-center">No products</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             )}

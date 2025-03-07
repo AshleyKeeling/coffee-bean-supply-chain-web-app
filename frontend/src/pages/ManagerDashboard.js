@@ -1,16 +1,44 @@
-import { Form, InputGroup, Button } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BatchDetails from "../components/manager/BatchDetails";
+import { useEffect, useState } from "react";
+import { useAuthContext } from '../hooks/useAuthContext';
+
 
 const ManagerDashboard = () => {
+    const { user } = useAuthContext();
+
+    const [batches, setBatches] = useState([]);
+
+    useEffect(() => {
+        const getBatches = async () => {
+            if (!user) return; // Ensures user exists before fetching
+
+            const response = await fetch('/api/batch/all', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
+            const json = await response.json();
+
+            if (response.ok) {
+                console.log(json)
+                setBatches(json);
+            }
+        };
+
+        getBatches();
+    }, [user]);
+
+
     return (
         <div className="main-content">
-            <h1 className="col-12 col-md-8 heading-2-size mt-4">Welcome garrysmith@gmail.com</h1>
+            <h1 className="col-12 col-md-8 heading-2-size mt-4">Welcome {user.email}</h1>
             <div className="heading-4-size primary-colour mb-4">
-                <strong>Smart Contract Address:</strong>
+                <strong>Ethereum Address:</strong>
                 <span style={{ fontWeight: "300", wordBreak: "break-word" }}>
-                    0xABCDEF1234567890ABCDEF1234567890ABCDEF12
+                    {user.ethereum_address}
                 </span>
             </div>
 
@@ -47,7 +75,21 @@ const ManagerDashboard = () => {
                 </div>
             </div>
 
-            <BatchDetails />
+            {batches && batches.length > 0 ? (
+                batches.map((batch) => (
+                    <BatchDetails
+                        smartContractAddress={batch.smart_contract_address}
+                        status={"-- dummy text --"}
+                        batchQuantity={"-- dummy text --"}
+                        creationDate={"-- dummy text --"}
+                        latestUpdate={"-- dummy text --"}
+                        products={batch.products}
+
+                    />
+                ))
+            ) : (
+                <p>No batches created yet</p>
+            )}
 
 
         </div>

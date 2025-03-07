@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "./useAuthContext";
 
 
 export const useNewBatch = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
     const navigate = useNavigate();
+    const { user } = useAuthContext();
+
 
     const newBatch = async (smart_contract_address, supply_chain_id, origin, batch_quantity, processing_type, roasting_type, bean_type, participant_addresses) => {
         setIsLoading(true);
@@ -13,7 +16,7 @@ export const useNewBatch = () => {
 
         const response = await fetch('/api/batch/new', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` },
             body: JSON.stringify({ smart_contract_address, supply_chain_id, origin, batch_quantity, processing_type, roasting_type, bean_type, participant_addresses })
         })
 

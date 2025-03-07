@@ -18,9 +18,19 @@ const newSupplyChain = async (req, res) => {
         res.status(200).json({ supply_chain_id });
     } catch (error) {
         res.status(400).json({ error: error.message })
-
     }
-
 }
 
-module.exports = { newSupplyChain };
+const doesSupplyChainExist = async (supply_chain_id) => {
+    try {
+        const exists = await SupplyChain.exists({ supply_chain_id });
+        return !!exists; // Converts to true/false
+    } catch (error) {
+        console.error("Error checking supply chain:", error.message);
+        return false; // Returns false if an error occurs
+    }
+};
+
+
+
+module.exports = { newSupplyChain, doesSupplyChainExist };

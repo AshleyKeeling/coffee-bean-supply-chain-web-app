@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
 const supplyChainRoutes = require('./routes/supplyChain');
+const batchRoutes = require('./routes/batch');
 
 
 // express app
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/user', userRoutes);
 app.use('/api/supplyChain', supplyChainRoutes);
+app.use('/api/batch', batchRoutes);
 
 
 // connect to db

@@ -12,17 +12,16 @@ const productSchema = new Schema({
     smart_contract_address: {
         type: String,
         required: true,
-        unique: true,
         minlength: 42,
         maxlength: 42
     },
     supply_chain_id: {
         type: String,
         required: true,
-        unique: true
     },
     status: {
         type: String,
+        required: true,
         maxlength: 100
     }
 });

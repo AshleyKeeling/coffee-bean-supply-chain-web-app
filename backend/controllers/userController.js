@@ -46,7 +46,7 @@ const signupUser = async (req, res) => {
         // create JWT token
         const token = createToken(user._id);
 
-        res.status(200).json({ email, role, token });
+        res.status(200).json({ email, role, ethereum_address, token });
 
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -71,6 +71,7 @@ const signinUser = async (req, res) => {
 
         // Compare password
         const match = await bcrypt.compare(password, user.password);
+
         if (!match) {
             return res.status(400).json({ error: "Incorrect Password" });
         }
@@ -80,7 +81,7 @@ const signinUser = async (req, res) => {
         // create JWT token
         const token = createToken(user._id);
 
-        res.status(200).json({ email, role: user.role, token })
+        res.status(200).json({ email, role: user.role, ethereum_address: user.ethereum_address, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

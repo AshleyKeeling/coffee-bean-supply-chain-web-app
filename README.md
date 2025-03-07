@@ -6,4 +6,4 @@ test accounts
 
 Manager
 testManager@gmail.com
-Test12@Password!!\_
+Test12@Password!!

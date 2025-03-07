@@ -6,14 +6,13 @@ const batchModel = new Schema({
     smart_contract_address: {
         type: String,
         required: true,
-        unique: true,
         minLength: 42,
         maxLength: 42,
     },
     supply_chain_id: {
         type: String,
+        unique: false,
         required: true,
-        unique: true
     },
     participant_addresses: [
         {

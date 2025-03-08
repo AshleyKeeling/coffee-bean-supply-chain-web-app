@@ -42,7 +42,7 @@ const NewBatch = () => {
         ];
 
         // dummy smart contract address for now
-        const smart_contract_address = "0xABCDEF1234567890ABCDEF1234567890ABCDEF16"
+        const smart_contract_address = "0xABCDEF1234567890ABCDEF1234567890ABCDEF17"
         await newBatch(smart_contract_address, supplyChainId, origin, batchQuantity, processingType, roastingType, beanType, participant_Addresses)
     }
 

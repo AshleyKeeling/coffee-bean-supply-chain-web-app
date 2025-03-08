@@ -31,6 +31,15 @@ const ManagerDashboard = () => {
         getBatches();
     }, [user]);
 
+    // Group batches by supply_chain_id
+    const groupedBatches = batches.reduce((acc, batch) => {
+        if (!acc[batch.supply_chain_id]) {
+            acc[batch.supply_chain_id] = [];
+        }
+        acc[batch.supply_chain_id].push(batch);
+        return acc;
+    }, {});
+
 
     return (
         <div className="main-content">
@@ -75,17 +84,23 @@ const ManagerDashboard = () => {
                 </div>
             </div>
 
-            {batches && batches.length > 0 ? (
-                batches.map((batch) => (
-                    <BatchDetails
-                        smartContractAddress={batch.smart_contract_address}
-                        status={"-- dummy text --"}
-                        batchQuantity={"-- dummy text --"}
-                        creationDate={"-- dummy text --"}
-                        latestUpdate={"-- dummy text --"}
-                        products={batch.products}
-
-                    />
+            {/* Displays each batch grouped by the supply chains */}
+            {Object.keys(groupedBatches).length > 0 ? (
+                Object.keys(groupedBatches).map((supplyChainId) => (
+                    <div key={supplyChainId} className="mb-4">
+                        <h3 className="heading-3-size primary-colour">Supply Chain: {supplyChainId}</h3>
+                        {groupedBatches[supplyChainId].map((batch) => (
+                            <BatchDetails
+                                key={batch.smart_contract_address}
+                                smartContractAddress={batch.smart_contract_address}
+                                status={"-- dummy text --"}
+                                batchQuantity={"-- dummy text --"}
+                                creationDate={"-- dummy text --"}
+                                latestUpdate={"-- dummy text --"}
+                                products={batch.products}
+                            />
+                        ))}
+                    </div>
                 ))
             ) : (
                 <p>No batches created yet</p>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import React from 'react';
 
-const BatchDetails = ({ smartContractAddress, status, batchQuantity, creationDate, latestUpdate, products }) => {
+const ManagerBatchDetails = ({ smartContractAddress, status, batchQuantity, creationDate, latestUpdate, products }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -108,4 +108,4 @@ const BatchDetails = ({ smartContractAddress, status, batchQuantity, creationDat
     )
 }
 
-export default BatchDetails;
+export default ManagerBatchDetails;

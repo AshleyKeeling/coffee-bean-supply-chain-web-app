@@ -64,11 +64,11 @@ const newBatch = async (req, res) => {
 const getAllBatches = async (req, res) => {
     console.log(req.user);
 
-
+    // finds all batches that the user is associated with
     try {
-        const managerEthereumAddress = req.user.ethereum_address
+        const userEthereumAddress = req.user.ethereum_address
 
-        const batches = await Batch.find({ "participant_addresses.role": "Manager", "participant_addresses.ethereum_address": managerEthereumAddress });
+        const batches = await Batch.find({ "participant_addresses.ethereum_address": userEthereumAddress });
         for (let i = 0; i < batches.length; i++) {
             const batch_smart_contract_address = batches[i].smart_contract_address;
             const products = await Product.find({ smart_contract_address: batch_smart_contract_address })
@@ -85,4 +85,19 @@ const getAllBatches = async (req, res) => {
     }
 }
 
-module.exports = { newBatch, getAllBatches };
+const getBatch = async (req, res) => {
+    const { smart_contract_address } = req.params;
+
+    try {
+        const batch = await Batch.find({ smart_contract_address });
+        const products = await Product.find({ smart_contract_address })
+
+
+        console.log(batch, products)
+        res.status(200).json(batch, products);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+module.exports = { newBatch, getAllBatches, getBatch };

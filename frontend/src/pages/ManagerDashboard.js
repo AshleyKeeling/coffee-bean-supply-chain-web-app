@@ -1,7 +1,7 @@
 import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import BatchDetails from "../components/manager/BatchDetails";
+import ManagerBatchDetails from "../components/ManagerBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -90,7 +90,7 @@ const ManagerDashboard = () => {
                     <div key={supplyChainId} className="mb-4">
                         <h3 className="heading-3-size primary-colour">Supply Chain: {supplyChainId}</h3>
                         {groupedBatches[supplyChainId].map((batch) => (
-                            <BatchDetails
+                            <ManagerBatchDetails
                                 key={batch.smart_contract_address}
                                 smartContractAddress={batch.smart_contract_address}
                                 status={"-- dummy text --"}
@@ -98,6 +98,7 @@ const ManagerDashboard = () => {
                                 creationDate={"-- dummy text --"}
                                 latestUpdate={"-- dummy text --"}
                                 products={batch.products}
+                                type="Manager"
                             />
                         ))}
                     </div>

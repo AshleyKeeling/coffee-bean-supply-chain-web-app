@@ -1,11 +1,9 @@
 import BackButton from "../components/BackButton";
 import { useState } from "react";
 import { useNewBatch } from "../hooks/useNewBatch";
-import { useAuthContext } from '../hooks/useAuthContext';
 import { useLocation } from 'react-router-dom';
 import React from "react";
-import { useEffect } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+
 
 
 
@@ -15,9 +13,8 @@ const UpdateBatch = () => {
     const [additionalNotes, setAdditionalNotes] = useState('');
 
 
-    const { newBatch, error, isLoading } = useNewBatch();
+    const { error, isLoading } = useNewBatch();
 
-    const { user } = useAuthContext();
     const location = useLocation();
     const batch = location.state?.batch;
 

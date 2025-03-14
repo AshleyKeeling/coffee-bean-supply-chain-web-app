@@ -1,0 +1,246 @@
+
+[
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "manager",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "batchId",
+          "type": "uint256"
+        }
+      ],
+      "name": "NewBatchCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "batches",
+      "outputs": [
+        {
+          "internalType": "contract Batch",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "supply_chain_id",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "creation_date",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "origin",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "bean_type",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "roasting_type",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "processing_type",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Batch.BatchDetails",
+          "name": "_batchDetails",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "manager",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "farmer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "harvestor",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "processor",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "drying_specialist",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "exporter",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "roaster",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "packaging_specialist",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "distributor",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Batch.Participants",
+          "name": "_participants",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "batch_quantity",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "current_holder",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "previous_stage",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "next_stage",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "status",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "latest_update",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "additional_notes",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Batch.BatchUpdate",
+          "name": "_initialUpdate",
+          "type": "tuple"
+        }
+      ],
+      "name": "createBatch",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_manager",
+          "type": "address"
+        }
+      ],
+      "name": "getBatchesByManager",
+      "outputs": [
+        {
+          "internalType": "contract Batch[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTotalBatches",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "managerBatches",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]

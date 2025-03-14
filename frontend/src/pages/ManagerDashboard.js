@@ -4,9 +4,17 @@ import { Link } from "react-router-dom";
 import ManagerBatchDetails from "../components/ManagerBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
+import { getBatchContracts, getBatchUpdates } from "../utils/BatchFactory";
 
 
 const ManagerDashboard = () => {
+    const [smartContractBatches, setSmartContractBatches] = useState("");
+
+    const getBatchUpdate = async () => {
+        const msg = await getBatchUpdates("0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9");
+        setSmartContractBatches(msg);
+    };
+
     const { user } = useAuthContext();
 
     const [batches, setBatches] = useState([]);
@@ -106,7 +114,12 @@ const ManagerDashboard = () => {
             ) : (
                 <p>No batches created yet</p>
             )}
+            <div>
+                <h1>smart Contract</h1>
+                <button onClick={getBatchUpdate}>Get update for batch</button>
+                <p>smart contract batches: {smartContractBatches}</p>
 
+            </div>
 
         </div>
     )

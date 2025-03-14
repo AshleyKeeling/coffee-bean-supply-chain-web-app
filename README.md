@@ -7,3 +7,8 @@ test accounts
 Manager
 testManager@gmail.com
 Test12@Password!!
+
+// run this if it wont start
+rm -rf node_modules package-lock.json
+npm install
+npm start

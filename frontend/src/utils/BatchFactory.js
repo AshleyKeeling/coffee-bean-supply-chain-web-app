@@ -9,18 +9,21 @@ const provider = new ethers.BrowserProvider(window.ethereum);
 const signer = await provider.getSigner();  // Make sure to await this
 
 // Connect to the factory contract
-const factoryContract = new ethers.Contract(factoryContractAddress, factoryABI, signer);
+// const factoryContract = new ethers.Contract(factoryContractAddress, factoryABI, signer);
 
-export async function getBatchContracts() {
+// returns batch details including particiapnt addresses for a specific batch
+export async function getBatchDetails(batchAddress) {
     try {
-        const batchAddresses = await factoryContract.getTotalBatches();
-        console.log("Batch Contracts:", batchAddresses);
-        return batchAddresses;
+        const batchContract = new ethers.Contract(batchAddress, batchContractABI, provider); // Use provider here for read-only functions
+        const batchDetails = await batchContract.getBatchDetails();
+        console.log("BatchDetails:", batchDetails);
+        return batchDetails;
     } catch (error) {
-        console.error("Error getting batch contracts:", error);
+        console.error("Error getting batch details:", error);
     }
 }
 
+// returns all updates for a specific batch
 export async function getBatchUpdates(batchAddress) {
     try {
         const batchContract = new ethers.Contract(batchAddress, batchContractABI, provider); // Use provider here for read-only functions

@@ -9,9 +9,9 @@
               "type": "string"
             },
             {
-              "internalType": "string",
+              "internalType": "uint256",
               "name": "creation_date",
-              "type": "string"
+              "type": "uint256"
             },
             {
               "internalType": "string",
@@ -124,11 +124,6 @@
             },
             {
               "internalType": "string",
-              "name": "latest_update",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
               "name": "additional_notes",
               "type": "string"
             },
@@ -188,12 +183,6 @@
         {
           "indexed": false,
           "internalType": "string",
-          "name": "latest_update",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
           "name": "additional_notes",
           "type": "string"
         },
@@ -217,9 +206,9 @@
           "type": "string"
         },
         {
-          "internalType": "string",
+          "internalType": "uint256",
           "name": "creation_date",
-          "type": "string"
+          "type": "uint256"
         },
         {
           "internalType": "string",
@@ -283,11 +272,6 @@
             },
             {
               "internalType": "string",
-              "name": "latest_update",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
               "name": "additional_notes",
               "type": "string"
             },
@@ -300,6 +284,103 @@
           "internalType": "struct Batch.BatchUpdate[]",
           "name": "",
           "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getBatchDetails",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "supply_chain_id",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "creation_date",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "origin",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "bean_type",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "roasting_type",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "processing_type",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Batch.BatchDetails",
+          "name": "",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "manager",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "farmer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "harvestor",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "processor",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "drying_specialist",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "exporter",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "roaster",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "packaging_specialist",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "distributor",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Batch.Participants",
+          "name": "",
+          "type": "tuple"
         }
       ],
       "stateMutability": "view",
@@ -392,11 +473,6 @@
         },
         {
           "internalType": "string",
-          "name": "_latestUpdate",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
           "name": "_additionalNotes",
           "type": "string"
         }
@@ -444,11 +520,6 @@
         {
           "internalType": "string",
           "name": "status",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "latest_update",
           "type": "string"
         },
         {

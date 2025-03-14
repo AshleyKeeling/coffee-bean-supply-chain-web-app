@@ -4,15 +4,21 @@ import { Link } from "react-router-dom";
 import ManagerBatchDetails from "../components/ManagerBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
-import { getBatchContracts, getBatchUpdates } from "../utils/BatchFactory";
+import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 
 
 const ManagerDashboard = () => {
+    const [smartContractBatchDetails, setSmartContractBatchDetails] = useState("");
     const [smartContractBatches, setSmartContractBatches] = useState("");
 
+    const getBatchDetail = async () => {
+        const res = await getBatchDetails("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512")
+        setSmartContractBatchDetails(res);
+    }
+
     const getBatchUpdate = async () => {
-        const msg = await getBatchUpdates("0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9");
-        setSmartContractBatches(msg);
+        const res = await getBatchUpdates("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+        setSmartContractBatches(res);
     };
 
     const { user } = useAuthContext();
@@ -115,9 +121,13 @@ const ManagerDashboard = () => {
                 <p>No batches created yet</p>
             )}
             <div>
-                <h1>smart Contract</h1>
-                <button onClick={getBatchUpdate}>Get update for batch</button>
-                <p>smart contract batches: {smartContractBatches}</p>
+                <h1>Smart Contract - Batch details</h1>
+                <button onClick={getBatchDetail}>Get batch details</button>
+                <p>batch details: {smartContractBatchDetails}</p>
+
+                <h1>Smart Contract - Batch updates</h1>
+                <button onClick={getBatchUpdate}>Get batch updates</button>
+                <p>batch updates: {smartContractBatches}</p>
 
             </div>
 

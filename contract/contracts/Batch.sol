@@ -5,7 +5,7 @@ contract Batch {
     // General batch details struct
     struct BatchDetails {
         string supply_chain_id;
-        string creation_date;
+        uint256 creation_date;
         string origin;
         string bean_type;
         string roasting_type;
@@ -33,7 +33,6 @@ contract Batch {
         string previous_stage;
         string next_stage;
         string status;
-        string latest_update;
         string additional_notes;
         uint256 timestamp;
     }
@@ -67,7 +66,6 @@ contract Batch {
         string previous_stage,
         string next_stage,
         string status,
-        string latest_update,
         string additional_notes,
         uint256 timestamp
     );
@@ -93,7 +91,6 @@ contract Batch {
         string memory _previousStage,
         string memory _nextStage,
         string memory _status,
-        string memory _latestUpdate,
         string memory _additionalNotes
     ) public onlyParticipant {
         // Append the new update to the history
@@ -105,7 +102,6 @@ contract Batch {
                 previous_stage: _previousStage,
                 next_stage: _nextStage,
                 status: _status,
-                latest_update: _latestUpdate,
                 additional_notes: _additionalNotes,
                 timestamp: block.timestamp
             })
@@ -119,10 +115,18 @@ contract Batch {
             _previousStage,
             _nextStage,
             _status,
-            _latestUpdate,
             _additionalNotes,
             block.timestamp
         );
+    }
+
+    // returns all details and latest update
+    function getBatchDetails()
+        public
+        view
+        returns (BatchDetails memory, Participants memory)
+    {
+        return (batchDetails, participants);
     }
 
     // Function to get all updates (for timeline in frontend)

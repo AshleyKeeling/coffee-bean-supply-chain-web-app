@@ -4,12 +4,24 @@ import { FaSearch } from "react-icons/fa";
 import ParticipantBatchDetails from "../components/ParticipantBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
+import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 
 
 const ParticipantDashboard = () => {
+    const [smartContractDetails, setSmartContractDetails] = useState("");
+    const [latestSmartContractUpdate, setLatestSmartContractUpdate] = useState("");
+
     const { user } = useAuthContext();
 
     const [batches, setBatches] = useState([]);
+
+    const getSmartContractData = async () => {
+        const details = await getBatchDetails("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512")
+        setSmartContractDetails(details);
+
+        const updates = await getBatchUpdates("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+        setLatestSmartContractUpdate(updates[updates.length - 1]);
+    }
 
     useEffect(() => {
         const getBatches = async () => {
@@ -29,6 +41,8 @@ const ParticipantDashboard = () => {
         };
 
         getBatches();
+
+        getSmartContractData();
     }, [user]);
 
     // Group batches by supply_chain_id
@@ -50,10 +64,6 @@ const ParticipantDashboard = () => {
                     {user.ethereum_address}
                 </span>
             </div>
-
-
-
-
 
             <div className="">
                 <InputGroup>
@@ -81,12 +91,28 @@ const ParticipantDashboard = () => {
                             < ParticipantBatchDetails
                                 key={batch.smart_contract_address}
                                 batch={batch}
-                                status={"-- dummy text --"}
-                                batchQuantity={"-- dummy text --"}
-                                creationDate={"-- dummy text --"}
-                                latestUpdate={"-- dummy text --"}
-
-                                type="participant"
+                                status={latestSmartContractUpdate.status}
+                                batchQuantity={latestSmartContractUpdate.batch_quantity}
+                                creationDate={new Date(Number(smartContractDetails[0].creation_date) * 1000)
+                                    .toLocaleString("en-GB", {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit",
+                                        hour12: false, // Ensures 24-hour format
+                                    })}
+                                latestUpdate={new Date(Number(latestSmartContractUpdate.timestamp) * 1000)
+                                    .toLocaleString("en-GB", {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit",
+                                        hour12: false, // Ensures 24-hour format
+                                    })}
                             />
                         ))}
                     </div>

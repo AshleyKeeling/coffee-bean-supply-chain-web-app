@@ -17,8 +17,8 @@ async function main() {
 
     // batch 1 details
     const batch_1_Details = [
-        "123",
-        "2025-03-13",
+        "SC-001-25",
+        Math.floor(Date.now() / 1000),
         "Brazil",
         "Arabica",
         "Light",
@@ -26,13 +26,12 @@ async function main() {
     ];
 
     const batch_1_initial_update = [
-        1000,
+        756,
         "Brazil Farm",
         "Farmer",
+        "N/A",
         "Cultivation",
-        "Harvesting",
-        "In Progress",
-        "Batch created",
+        "Batch Created",
         "Initial batch creation",
         Math.floor(Date.now() / 1000)
     ];
@@ -43,35 +42,113 @@ async function main() {
 
     console.log("Sample Batch deployed to:", await batch_1.getAddress());
 
-    const batch_1_second_update = await batch_1.updateBatch(1000,
+    const batch_1_update_2 = await batch_1.updateBatch(
+        752,
+        "Brazil Farm",
+        "Farmer",
+        "N/A",
+        "Harvesting",
+        "All crops planted",
+        "All went to plan",
+    )
+
+    const batch_1_update_3 = await batch_1.updateBatch(
+        752,
         "Brazil Farm",
         "Harvestor",
         "Cultivation",
-        "Harvesting",
-        "In Progress",
-        "Batch created",
-        "second updates tests  creation",
+        "Processing",
+        "Coffee beans collected",
+        "All coffee beans collected and ready for the next stage",
     )
-    console.log("Second update transaction sent:", batch_1_second_update.hash);
+
+    const batch_1_update_4 = await batch_1.updateBatch(
+        752,
+        "Brazil Farm",
+        "Processor",
+        "Harvesting",
+        "Drying",
+        "Beans processed",
+        "Dry/natural method used for enhanced flavour profile",
+    )
+
+    const batch_1_update_5 = await batch_1.updateBatch(
+        752,
+        "Brazil Farm",
+        "Drying Specialist",
+        "Processing",
+        "Exporting",
+        "Beans sun dried",
+        "Beans reached the ideal moisture level for storage",
+    )
+
+    const batch_1_update_6 = await batch_1.updateBatch(
+        752,
+        "Brazil Farm",
+        "Exporter",
+        "Drying",
+        "Roasting",
+        "In transit",
+        "Shipment has been dispatched and is en route to its destination",
+    )
+
+    const batch_1_update_7 = await batch_1.updateBatch(
+        752,
+        "London, UK",
+        "Roaster",
+        "Exporting",
+        "Packaging",
+        "Roasting complete",
+        "Beans roasted to a light profile, preserving acidity and complexity",
+    )
+
+    const batch_1_update_8 = await batch_1.updateBatch(
+        752,
+        "London, UK",
+        "Packaging Specialist",
+        "Roasting",
+        "Distribution",
+        "Packaged and sealed",
+        "Nitrogen-flushed packaging used to maintain freshness",
+    )
+
+    const batch_1_update_9 = await batch_1.updateBatch(
+        752,
+        "London, UK",
+        "Distributor",
+        "Packaging",
+        "Consumer",
+        "Deliverd to retailor",
+        "Product is now available for purchase and consumption",
+    )
+
+    console.log("Second update transaction sent:", batch_1_update_2.hash);
+    console.log("Second update transaction sent:", batch_1_update_3.hash);
+    console.log("Second update transaction sent:", batch_1_update_4.hash);
+    console.log("Second update transaction sent:", batch_1_update_5.hash);
+    console.log("Second update transaction sent:", batch_1_update_6.hash);
+    console.log("Second update transaction sent:", batch_1_update_7.hash);
+    console.log("Second update transaction sent:", batch_1_update_8.hash);
+    console.log("Second update transaction sent:", batch_1_update_9.hash);
+
 
     // batch 1 details
     const batch_2_Details = [
-        "123",
-        "2025-03-13",
+        "SC-001-25",
+        Math.floor(Date.now() / 1000),
         "Brazil",
         "Arabica",
         "Light",
-        "Wet"
+        "Honey"
     ];
 
     const batch_2_initial_update = [
-        1000,
+        756,
         "Brazil Farm",
         "Farmer",
+        "N/A",
         "Cultivation",
-        "Harvesting",
-        "In Progress",
-        "Batch created",
+        "Batch Created",
         "Initial batch creation",
         Math.floor(Date.now() / 1000)
     ];

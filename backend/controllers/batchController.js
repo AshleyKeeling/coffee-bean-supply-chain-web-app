@@ -5,7 +5,6 @@ const { doesSupplyChainExist } = require('./supplyChainController');
 const validator = require('validator');
 
 
-
 const newBatch = async (req, res) => {
     const { origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses } = req.body;
     console.log(origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses)
@@ -28,14 +27,15 @@ const newBatch = async (req, res) => {
             return res.status(400).json({ error: "Supply Chain ID does not exist, please create one" });
         }
 
-        // check smart contract address
-        // future blockchain development needed for this check
-
         const exists = await Batch.findOne({ smart_contract_address });
 
         if (exists) {
             return res.status(400).json({ error: "Batch with that smart contract address already exsists" });
         }
+
+        // extra check -- query the blockchain to verify the smart contract was created
+
+
 
         // Create new batch
         const newBatch = await Batch.create({ smart_contract_address, supply_chain_id, participant_addresses });
@@ -51,7 +51,7 @@ const newBatch = async (req, res) => {
             };
 
 
-            // Call `newProduct`, but don't send `res`
+            // Call`newProduct`, but don't send `res`
             const product = await newProduct(productData);
             products.push(product);
         }

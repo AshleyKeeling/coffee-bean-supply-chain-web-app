@@ -29,7 +29,7 @@ const BatchTimeline = () => {
         const updates = await getBatchUpdates(smartContractAddress);
         setSmartContractUpdates(updates);
 
-        console.log("herere" + smartContractAddress)
+        console.log("herere" + smartContractUpdates)
     }
 
 
@@ -38,7 +38,16 @@ const BatchTimeline = () => {
         // eslint-disable-next-line 
     }, [smartContractAddress]);
 
-
+    const stages = [
+        { name: "Cultivation", key: "farmer", icon: cultivationIcon },
+        { name: "Harvesting", key: "harvestor", icon: harvestingIcon },
+        { name: "Processing", key: "processor", icon: processingIcon },
+        { name: "Drying", key: "drying_specialist", icon: dryingIcon },
+        { name: "Exporting", key: "exporter", icon: exportingIcon },
+        { name: "Roasting", key: "roaster", icon: roastingIcon },
+        { name: "Packaging", key: "packaging_specialist", icon: packagingIcon },
+        { name: "Distribution", key: "distributor", icon: distributionIcon }
+    ];
 
 
     return (
@@ -48,13 +57,13 @@ const BatchTimeline = () => {
                     <span className="col-12 col-md-3">
                         <BackButton />
                     </span>
-                    <h1 className="col-12 col-md-8 heading-1-size">Supply Chain: SC-0001-25</h1>
+                    <h1 className="col-12 col-md-8 heading-1-size">Supply Chain: xx-xx-xx</h1>
                 </div>
 
                 <div className="heading-4-size primary-colour text-md-center text-md-start">
                     <strong>Smart Contract Address:</strong>
                     <span style={{ fontWeight: "300", wordBreak: "break-word" }}>
-                        0xABCDEF1234567890ABCDEF1234567890ABCDEF12
+                        {smartContractAddress}
                     </span>
                 </div>
 
@@ -76,7 +85,7 @@ const BatchTimeline = () => {
             <h2 className='text-center heading-2-size'>Timeline</h2>
             <div id='timeline-content'>
 
-                {smartContractUpdates ? (
+                {/* {smartContractUpdates ? (
                     <ul>
                         <TimelineCard stageNumber={1} stageName={"Cultivation"} startDate={smartContractUpdates[0].timestamp} endDate={smartContractUpdates[1].timestamp} currentHolder={smartContractUpdates[1].current_holder} location={smartContractUpdates[1].location} status={smartContractUpdates[1].status} participantAddress={smartContractDetails[1].farmer} additionalNotes={smartContractUpdates[1].additional_notes} icon={cultivationIcon} />
                         <TimelineCard stageNumber={2} stageName={"Harvesting"} startDate={smartContractUpdates[1].timestamp} endDate={smartContractUpdates[2].timestamp} currentHolder={smartContractUpdates[2].current_holder} location={smartContractUpdates[2].location} status={smartContractUpdates[2].status} participantAddress={smartContractDetails[1].harvestor} additionalNotes={smartContractUpdates[2].additional_notes} icon={harvestingIcon} />
@@ -87,7 +96,30 @@ const BatchTimeline = () => {
                         <TimelineCard stageNumber={7} stageName={"Packaging"} startDate={smartContractUpdates[6].timestamp} endDate={smartContractUpdates[7].timestamp} currentHolder={smartContractUpdates[7].current_holder} location={smartContractUpdates[7].location} status={smartContractUpdates[7].status} participantAddress={smartContractDetails[1].packaging_specialist} additionalNotes={smartContractUpdates[7].additional_notes} icon={packagingIcon} />
                         <TimelineCard stageNumber={8} stageName={"Distribution"} startDate={smartContractUpdates[7].timestamp} endDate={smartContractUpdates[8].timestamp} currentHolder={smartContractUpdates[8].current_holder} location={smartContractUpdates[8].location} status={smartContractUpdates[8].status} participantAddress={smartContractDetails[1].distributor} additionalNotes={smartContractUpdates[8].additional_notes} icon={distributionIcon} />
                     </ul>
-                ) : (<p>Invalid address/ID or No Updates available yet </p>)}
+                ) : (<p>Invalid address/ID or No Updates available yet </p>)} */}
+
+                {smartContractUpdates?.length > 0 ? (
+                    <ul>
+                        {stages.map((stage, index) => {
+                            if (index >= smartContractUpdates.length - 1) return null;  // Ensure we don't access out of bounds
+                            return (
+                                <TimelineCard
+                                    key={index}
+                                    stageNumber={index + 1}
+                                    stageName={stage.name}
+                                    startDate={smartContractUpdates[index]?.timestamp}
+                                    endDate={smartContractUpdates[index + 1]?.timestamp}
+                                    currentHolder={smartContractUpdates[index + 1]?.current_holder}
+                                    location={smartContractUpdates[index + 1]?.location}
+                                    status={smartContractUpdates[index + 1]?.status}
+                                    participantAddress={smartContractDetails[1]?.[stage.key]}
+                                    additionalNotes={smartContractUpdates[index + 1]?.additional_notes}
+                                    icon={stage.icon}
+                                />
+                            );
+                        })}
+                    </ul>
+                ) : (<p>Invalid address/ID or No Updates available yet</p>)}
 
             </div>
         </div>

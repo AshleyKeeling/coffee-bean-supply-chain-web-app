@@ -41,9 +41,8 @@ const NewBatch = () => {
             { role: "Distributor", ethereum_address: distributorAddress }
         ];
 
-        // dummy smart contract address for now
-        const smart_contract_address = "0xABCDEF1234567890ABCDEF1234567890ABCDEF17"
-        await newBatch(smart_contract_address, supplyChainId, origin, batchQuantity, processingType, roastingType, beanType, participant_Addresses)
+
+        await newBatch(supplyChainId, origin, batchQuantity, processingType, roastingType, beanType, participant_Addresses)
     }
 
     return (

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ManagerBatchDetails from "../components/ManagerBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
-import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
+import { getBatchDetails, getBatchUpdates, createNewSmartContract, updateBatch } from "../utils/BatchFactory";
 
 
 const ManagerDashboard = () => {
@@ -128,6 +128,13 @@ const ManagerDashboard = () => {
                 <h1>Smart Contract - Batch updates</h1>
                 <button onClick={getBatchUpdate}>Get batch updates</button>
                 <p>batch updates: {smartContractBatches}</p>
+
+                <h1>Create new smart contract</h1>
+                <button onClick={createNewSmartContract}>New</button>
+
+                <h1>update smart contract</h1>
+                <button onClick={updateBatch}>Update</button>
+
 
             </div>
 

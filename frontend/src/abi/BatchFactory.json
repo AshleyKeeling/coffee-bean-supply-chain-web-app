@@ -1,19 +1,18 @@
-
 [
     {
       "anonymous": false,
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address",
-          "name": "manager",
-          "type": "address"
-        },
-        {
-          "indexed": false,
           "internalType": "uint256",
           "name": "batchId",
           "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "batchAddress",
+          "type": "address"
         }
       ],
       "name": "NewBatchCreated",
@@ -48,9 +47,9 @@
               "type": "string"
             },
             {
-              "internalType": "string",
+              "internalType": "uint256",
               "name": "creation_date",
-              "type": "string"
+              "type": "uint256"
             },
             {
               "internalType": "string",
@@ -163,11 +162,6 @@
             },
             {
               "internalType": "string",
-              "name": "latest_update",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
               "name": "additional_notes",
               "type": "string"
             },
@@ -188,14 +182,8 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_manager",
-          "type": "address"
-        }
-      ],
-      "name": "getBatchesByManager",
+      "inputs": [],
+      "name": "getAllBatches",
       "outputs": [
         {
           "internalType": "contract Batch[]",
@@ -209,30 +197,6 @@
     {
       "inputs": [],
       "name": "getTotalBatches",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "managerBatches",
       "outputs": [
         {
           "internalType": "uint256",

@@ -29,7 +29,7 @@ function App() {
           <Route path='/' element={<ConsumerHome />} />
           <Route path='/consumerHome' element={<ConsumerHome />} />
           <Route path='/supplyChainOverviewPage' element={<SupplyChainOverview />} />
-          <Route path='/batchTimeline' element={<BatchTimeline />} />
+          <Route path='/batchTimeline/:smartContractAddress' element={<BatchTimeline />} />
 
           {/* --- Participant Routes --- */}
           <Route path='/participantHome' element={<ParticipantHome />} />

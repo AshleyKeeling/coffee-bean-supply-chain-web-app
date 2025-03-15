@@ -14,10 +14,16 @@ import roasting from '../assets/images/roasting.jpeg';
 import packaging from '../assets/images/packaging.jpeg';
 import distribution from '../assets/images/distribution.jpeg';
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 
 
 const ConsumerHome = () => {
+    const [searchQuery, setSearchQuery] = useState(""); // Track the input value
+    const handleInputChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
     return (
         <div className="">
             <div className='main-content'>
@@ -31,9 +37,16 @@ const ConsumerHome = () => {
                         type="text"
                         placeholder="Search Product ID or Smart Contract Address"
                         className="border-start-0"
+                        value={searchQuery}
+                        onChange={handleInputChange} // Update search query on change
                     />
                     <Button className='px-4 primary-bg rounded button border-0'>
-                        <Link to="/batchTimeline" className="text-decoration-none text-white ">Search</Link>
+                        <Link
+                            to={`/batchTimeline/${searchQuery}`} // Pass the search query as part of the URL
+                            className="text-decoration-none text-white"
+                        >
+                            Search
+                        </Link>
                     </Button>
                 </InputGroup>
             </div>

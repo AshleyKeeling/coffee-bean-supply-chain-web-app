@@ -11,9 +11,36 @@ import exportingIcon from '../assets/icons/exportingIcon.png';
 import roastingIcon from '../assets/icons/roastingIcon.png';
 import packagingIcon from '../assets/icons/packagingIcon.png';
 import distributionIcon from '../assets/icons/distributionIcon.png';
+import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams
 
 
 const BatchTimeline = () => {
+    const { smartContractAddress } = useParams(); // Get the contract address from the URL
+
+    const [smartContractDetails, setSmartContractDetails] = useState("");
+    const [smartContractUpdates, setSmartContractUpdates] = useState("");
+
+    const getSmartContractData = async () => {
+        const details = await getBatchDetails(smartContractAddress)
+        setSmartContractDetails(details);
+
+        const updates = await getBatchUpdates(smartContractAddress);
+        setSmartContractUpdates(updates);
+
+        console.log("herere" + smartContractAddress)
+    }
+
+
+    useEffect(() => {
+        getSmartContractData();
+        // eslint-disable-next-line 
+    }, [smartContractAddress]);
+
+
+
+
     return (
         <div>
             <div className="main-content">
@@ -48,16 +75,20 @@ const BatchTimeline = () => {
             <hr />
             <h2 className='text-center heading-2-size'>Timeline</h2>
             <div id='timeline-content'>
-                <ul>
-                    <TimelineCard stageNumber={1} stageName={"Cultivation"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={cultivationIcon} />
-                    <TimelineCard stageNumber={2} stageName={"Harvesting"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={harvestingIcon} />
-                    <TimelineCard stageNumber={3} stageName={"Processing"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={processingIcon} />
-                    <TimelineCard stageNumber={4} stageName={"Drying"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={dryingIcon} />
-                    <TimelineCard stageNumber={5} stageName={"Exporting"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={exportingIcon} />
-                    <TimelineCard stageNumber={6} stageName={"Roasting"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={roastingIcon} />
-                    <TimelineCard stageNumber={7} stageName={"Packaging"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={packagingIcon} />
-                    <TimelineCard stageNumber={8} stageName={"Distribution"} date={"01/01/2025"} content={"The Harvester started the Harvesting stage on 06/01/2025 in Brazil. The batch’s status is ‘coffee beans collected’ and was finalised on 10/01/2025 at 11:15 AM GMT. The participant, identified by Ethereum address 0xabcdef1234567890abcdef1234567890, reported: ‘All coffee beans collected and ready for the next stage.’"} icon={distributionIcon} />
-                </ul>
+
+                {smartContractUpdates ? (
+                    <ul>
+                        <TimelineCard stageNumber={1} stageName={"Cultivation"} startDate={smartContractUpdates[0].timestamp} endDate={smartContractUpdates[1].timestamp} currentHolder={smartContractUpdates[1].current_holder} location={smartContractUpdates[1].location} status={smartContractUpdates[1].status} participantAddress={smartContractDetails[1].farmer} additionalNotes={smartContractUpdates[1].additional_notes} icon={cultivationIcon} />
+                        <TimelineCard stageNumber={2} stageName={"Harvesting"} startDate={smartContractUpdates[1].timestamp} endDate={smartContractUpdates[2].timestamp} currentHolder={smartContractUpdates[2].current_holder} location={smartContractUpdates[2].location} status={smartContractUpdates[2].status} participantAddress={smartContractDetails[1].harvestor} additionalNotes={smartContractUpdates[2].additional_notes} icon={harvestingIcon} />
+                        <TimelineCard stageNumber={3} stageName={"Processing"} startDate={smartContractUpdates[2].timestamp} endDate={smartContractUpdates[3].timestamp} currentHolder={smartContractUpdates[3].current_holder} location={smartContractUpdates[3].location} status={smartContractUpdates[3].status} participantAddress={smartContractDetails[1].processor} additionalNotes={smartContractUpdates[3].additional_notes} icon={processingIcon} />
+                        <TimelineCard stageNumber={4} stageName={"Drying"} startDate={smartContractUpdates[3].timestamp} endDate={smartContractUpdates[4].timestamp} currentHolder={smartContractUpdates[4].current_holder} location={smartContractUpdates[4].location} status={smartContractUpdates[4].status} participantAddress={smartContractDetails[1].drying_specialist} additionalNotes={smartContractUpdates[4].additional_notes} icon={dryingIcon} />
+                        <TimelineCard stageNumber={5} stageName={"Exporting"} startDate={smartContractUpdates[4].timestamp} endDate={smartContractUpdates[5].timestamp} currentHolder={smartContractUpdates[5].current_holder} location={smartContractUpdates[5].location} status={smartContractUpdates[5].status} participantAddress={smartContractDetails[1].exporter} additionalNotes={smartContractUpdates[5].additional_notes} icon={exportingIcon} />
+                        <TimelineCard stageNumber={6} stageName={"Roasting"} startDate={smartContractUpdates[5].timestamp} endDate={smartContractUpdates[6].timestamp} currentHolder={smartContractUpdates[6].current_holder} location={smartContractUpdates[6].location} status={smartContractUpdates[6].status} participantAddress={smartContractDetails[1].roaster} additionalNotes={smartContractUpdates[6].additional_notes} icon={roastingIcon} />
+                        <TimelineCard stageNumber={7} stageName={"Packaging"} startDate={smartContractUpdates[6].timestamp} endDate={smartContractUpdates[7].timestamp} currentHolder={smartContractUpdates[7].current_holder} location={smartContractUpdates[7].location} status={smartContractUpdates[7].status} participantAddress={smartContractDetails[1].packaging_specialist} additionalNotes={smartContractUpdates[7].additional_notes} icon={packagingIcon} />
+                        <TimelineCard stageNumber={8} stageName={"Distribution"} startDate={smartContractUpdates[7].timestamp} endDate={smartContractUpdates[8].timestamp} currentHolder={smartContractUpdates[8].current_holder} location={smartContractUpdates[8].location} status={smartContractUpdates[8].status} participantAddress={smartContractDetails[1].distributor} additionalNotes={smartContractUpdates[8].additional_notes} icon={distributionIcon} />
+                    </ul>
+                ) : (<p>Invalid address/ID or No Updates available yet </p>)}
+
             </div>
         </div>
     )

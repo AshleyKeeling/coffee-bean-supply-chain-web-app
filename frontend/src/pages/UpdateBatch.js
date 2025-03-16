@@ -1,8 +1,11 @@
 import BackButton from "../components/BackButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNewBatch } from "../hooks/useNewBatch";
 import { useLocation } from 'react-router-dom';
 import React from "react";
+import { getBatchDetails, getBatchUpdates, updateBatch } from "../utils/BatchFactory";
+import { useAuthContext } from '../hooks/useAuthContext';
+
 
 
 
@@ -12,20 +15,48 @@ const UpdateBatch = () => {
     const [status, setStatus] = useState('');
     const [additionalNotes, setAdditionalNotes] = useState('');
 
+    // smart contract data
+    const [smartContractDetails, setSmartContractDetails] = useState("");
+    const [latestSmartContractUpdate, setLatestSmartContractUpdate] = useState("");
+
 
     const { error, isLoading } = useNewBatch();
 
     const location = useLocation();
     const batch = location.state?.batch;
+    const { user } = useAuthContext();
 
     const [isOpen, setIsOpen] = useState(false);
 
 
+    const getSmartContractData = async (smart_contract_address) => {
+        const details = await getBatchDetails(smart_contract_address)
+        setSmartContractDetails(details);
+
+        const updates = await getBatchUpdates(smart_contract_address);
+        setLatestSmartContractUpdate(updates[updates.length - 1]);
+    }
+
+    // gets smart contract data for this batch
+    useEffect(() => {
+        getSmartContractData(batch.smart_contract_address)
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(batch)
+        updateBatch(
+            batch.smart_contract_address,
+            latestSmartContractUpdate.batch_quantity,
+            currentLocation,
+            user.role,
+            "previous_stage",
+            "next_stage",
+            status,
+            additionalNotes
+        )
         alert("current location: " + currentLocation + "\nstatus: " + status + "\nadditional notes: " + additionalNotes)
+
     }
 
     return (

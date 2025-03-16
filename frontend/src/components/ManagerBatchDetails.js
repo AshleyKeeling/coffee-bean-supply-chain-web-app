@@ -55,7 +55,7 @@ const ManagerBatchDetails = ({ smartContractAddress, status, batchQuantity, crea
                     </div>
                 </div>
                 <div className="d-flex flex-column justify-content-center col-12 col-md-4 col-lg-4">
-                    <Link to="/batchTimeline" className="text-decoration-none">
+                    <Link to={`/batchTimeline/${smartContractAddress}`} className="text-decoration-none">
                         <div className="button tertiary-bg text-white rounded text-center py-3 w-100 mb-2">
                             <span className="mx-2">View Batch Overview</span>
                         </div>

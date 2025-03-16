@@ -43,6 +43,8 @@ const ParticipantDashboard = () => {
         getBatches();
 
         getSmartContractData();
+
+        console.log("smart contract data:" + smartContractDetails + "\nLatest update:" + latestSmartContractUpdate + "\nBatch details: ")
     }, [user]);
 
     // Group batches by supply_chain_id

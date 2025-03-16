@@ -115,7 +115,16 @@ export async function createNewSmartContract(
     }
 }
 
-export async function updateBatch() {
+export async function updateBatch(
+    smart_contract_address,
+    batch_quantity,
+    location,
+    current_holder,
+    previous_stage,
+    next_stage,
+    status,
+    additional_notes
+) {
     try {
         if (!window.ethereum) throw new Error("MetaMask not installed!");
 
@@ -123,31 +132,19 @@ export async function updateBatch() {
         const signer = await provider.getSigner();
 
         // Provide the contract address of the deployed batch contract
-        const batchContractAddress = "0xb7f8bc63bbcad18155201308c8f3540b07f84f5e"; // Replace with your batch contract address
 
         // Create the contract instance
-        const batchContract = new ethers.Contract(batchContractAddress, batchContractABI, signer);
-
-        // Define dummy data for the update
-        const dummyBatchUpdate = {
-            batch_quantity: 800,
-            location: "Processing Facility",
-            current_holder: "Processor",
-            previous_stage: "Cultivation",
-            next_stage: "Drying",
-            status: "In Progress",
-            additional_notes: "Batch is in progress at the processing facility.",
-        };
+        const batchContract = new ethers.Contract(smart_contract_address, batchContractABI, signer);
 
         // Call the updateBatch function
         const tx = await batchContract.updateBatch(
-            dummyBatchUpdate.batch_quantity,
-            dummyBatchUpdate.location,
-            dummyBatchUpdate.current_holder,
-            dummyBatchUpdate.previous_stage,
-            dummyBatchUpdate.next_stage,
-            dummyBatchUpdate.status,
-            dummyBatchUpdate.additional_notes
+            batch_quantity,
+            location,
+            current_holder,
+            previous_stage,
+            next_stage,
+            status,
+            additional_notes
         );
 
         console.log("Transaction sent:", tx.hash);

@@ -4,14 +4,14 @@ const { newProduct } = require('./productController');
 const { doesSupplyChainExist } = require('./supplyChainController');
 const validator = require('validator');
 
-
-const newBatch = async (req, res) => {
-    const { origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses } = req.body;
-    console.log(origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses)
+// verifiy details
+const verifyBatchDetails = async (req, res) => {
+    const { origin, batch_quantity, processing_type, roasting_type, bean_type, supply_chain_id, participant_addresses } = req.body;
     try {
+        console.log("herererere")
         // validation checks
         // check particiapnt addresses contains 9 roles
-        if (Object.values({ origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses }).some(val => !val)) {
+        if (Object.values({ origin, batch_quantity, processing_type, roasting_type, bean_type, supply_chain_id, participant_addresses }).some(val => !val)) {
             return res.status(400).json({ error: "All fields must be filled" });
         }
         // check each address is valid
@@ -27,15 +27,26 @@ const newBatch = async (req, res) => {
             return res.status(400).json({ error: "Supply Chain ID does not exist, please create one" });
         }
 
+        console.log("here")
+        res.status(200).json({ message: "verify sucess" });
+
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const newBatch = async (req, res) => {
+    const { origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses } = req.body;
+    console.log(origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses)
+    try {
+
+
+
         const exists = await Batch.findOne({ smart_contract_address });
 
         if (exists) {
             return res.status(400).json({ error: "Batch with that smart contract address already exsists" });
         }
-
-        // extra check -- query the blockchain to verify the smart contract was created
-
-
 
         // Create new batch
         const newBatch = await Batch.create({ smart_contract_address, supply_chain_id, participant_addresses });
@@ -100,4 +111,4 @@ const getBatch = async (req, res) => {
     }
 }
 
-module.exports = { newBatch, getAllBatches, getBatch };
+module.exports = { verifyBatchDetails, newBatch, getAllBatches, getBatch };

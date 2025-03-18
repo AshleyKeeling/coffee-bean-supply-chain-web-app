@@ -1,51 +1,57 @@
 import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
-// import { Link } from "react-router-dom";
 import ParticipantBatchDetails from "../components/ParticipantBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
 import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 
-
 const ParticipantDashboard = () => {
-    const [smartContractDetails, setSmartContractDetails] = useState("");
-    const [latestSmartContractUpdate, setLatestSmartContractUpdate] = useState("");
-
     const { user } = useAuthContext();
 
     const [batches, setBatches] = useState([]);
+    const [batchDetails, setBatchDetails] = useState({}); // Stores smart contract data per batch
 
-    const getSmartContractData = async () => {
-        const details = await getBatchDetails("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512")
-        setSmartContractDetails(details);
-
-        const updates = await getBatchUpdates("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
-        setLatestSmartContractUpdate(updates[updates.length - 1]);
-    }
-
+    // Fetch batches from the backend
     useEffect(() => {
         const getBatches = async () => {
             if (!user) return; // Ensures user exists before fetching
 
             const response = await fetch('/api/batch/all', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
+                headers: { 'Authorization': `Bearer ${user.token}` }
             });
-            const json = await response.json();
 
             if (response.ok) {
-                console.log(json)
+                const json = await response.json();
                 setBatches(json);
             }
         };
 
         getBatches();
-
-        getSmartContractData();
-
-        console.log("smart contract data:" + smartContractDetails + "\nLatest update:" + latestSmartContractUpdate + "\nBatch details: ")
     }, [user]);
+
+    // Fetch blockchain data for each batch
+    useEffect(() => {
+        const fetchSmartContractData = async () => {
+            const newBatchDetails = {};
+
+            await Promise.all(batches.map(async (batch) => {
+                const details = await getBatchDetails(batch.smart_contract_address);
+                const updates = await getBatchUpdates(batch.smart_contract_address);
+                const latestUpdate = updates?.[updates.length - 1];
+
+                newBatchDetails[batch.smart_contract_address] = {
+                    details,
+                    latestUpdate
+                };
+            }));
+
+            setBatchDetails(newBatchDetails);
+        };
+
+        if (batches.length > 0) {
+            fetchSmartContractData();
+        }
+    }, [batches]);
 
     // Group batches by supply_chain_id
     const groupedBatches = batches.reduce((acc, batch) => {
@@ -55,7 +61,6 @@ const ParticipantDashboard = () => {
         acc[batch.supply_chain_id].push(batch);
         return acc;
     }, {});
-
 
     return (
         <div className="main-content">
@@ -77,55 +82,53 @@ const ParticipantDashboard = () => {
                         placeholder="Search smart contract address or supply chain ID..."
                         className="border-start-0 py-3"
                     />
-                    {/* <Button variant="dark" style={{ backgroundColor: "#661A25", border: "none", borderRadius: "5px" }} className='px-5'>
-                            <Link to="/batchTimeline" className="text-decoration-none text-white">Search</Link>
-                        </Button> */}
                 </InputGroup>
             </div>
-
 
             {/* Displays each batch grouped by the supply chains */}
             {Object.keys(groupedBatches).length > 0 ? (
                 Object.keys(groupedBatches).map((supplyChainId) => (
                     <div key={supplyChainId} className="mb-4">
                         <h3 className="heading-3-size primary-colour">Supply Chain: {supplyChainId}</h3>
-                        {groupedBatches[supplyChainId].map((batch) => (
-                            < ParticipantBatchDetails
-                                key={batch.smart_contract_address}
-                                batch={batch}
-                                status={latestSmartContractUpdate.status}
-                                batchQuantity={latestSmartContractUpdate.batch_quantity}
-                                creationDate={new Date(Number(smartContractDetails[0].creation_date) * 1000)
-                                    .toLocaleString("en-GB", {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                        second: "2-digit",
-                                        hour12: false, // Ensures 24-hour format
-                                    })}
-                                latestUpdate={new Date(Number(latestSmartContractUpdate.timestamp) * 1000)
-                                    .toLocaleString("en-GB", {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                        second: "2-digit",
-                                        hour12: false, // Ensures 24-hour format
-                                    })}
-                            />
-                        ))}
+                        {groupedBatches[supplyChainId].map((batch) => {
+                            const contractData = batchDetails[batch.smart_contract_address];
+
+                            return contractData ? (
+                                <ParticipantBatchDetails
+                                    key={batch.smart_contract_address}
+                                    batch={batch}
+                                    status={contractData.latestUpdate?.status}
+                                    batchQuantity={contractData.latestUpdate?.batch_quantity}
+                                    creationDate={new Date(Number(contractData.details[0]?.creation_date) * 1000)
+                                        .toLocaleString("en-GB", {
+                                            day: "2-digit",
+                                            month: "2-digit",
+                                            year: "numeric",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            second: "2-digit",
+                                            hour12: false, // Ensures 24-hour format
+                                        })}
+                                    latestUpdate={new Date(Number(contractData.latestUpdate?.timestamp) * 1000)
+                                        .toLocaleString("en-GB", {
+                                            day: "2-digit",
+                                            month: "2-digit",
+                                            year: "numeric",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            second: "2-digit",
+                                            hour12: false, // Ensures 24-hour format
+                                        })}
+                                />
+                            ) : <p key={batch.smart_contract_address}>Loading batch data...</p>;
+                        })}
                     </div>
                 ))
             ) : (
                 <p>No batches created yet</p>
             )}
-
-
         </div>
-    )
-}
+    );
+};
 
 export default ParticipantDashboard;

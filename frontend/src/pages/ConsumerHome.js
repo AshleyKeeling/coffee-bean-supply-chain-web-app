@@ -35,7 +35,7 @@ const ConsumerHome = () => {
                     </InputGroup.Text>
                     <Form.Control
                         type="text"
-                        placeholder="Search Product ID or Smart Contract Address"
+                        placeholder="Search Smart Contract Address"
                         className="border-start-0"
                         value={searchQuery}
                         onChange={handleInputChange} // Update search query on change

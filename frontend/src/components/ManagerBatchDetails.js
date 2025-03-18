@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import React from 'react';
 
-const ManagerBatchDetails = ({ smartContractAddress, status, batchQuantity, creationDate, latestUpdate, products }) => {
+const ManagerBatchDetails = ({ smartContractAddress, smartContractDetails, smartContractLatestUpdate, products }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -25,7 +25,7 @@ const ManagerBatchDetails = ({ smartContractAddress, status, batchQuantity, crea
                     <div className="body-size text-white">
                         <strong>Status: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            {status}
+                            {smartContractLatestUpdate.status}
                         </span>
                     </div>
 
@@ -33,7 +33,7 @@ const ManagerBatchDetails = ({ smartContractAddress, status, batchQuantity, crea
                     <div className="body-size text-white">
                         <strong>Batch Quantity: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            {batchQuantity}
+                            {smartContractLatestUpdate.batch_quantity}
                         </span>
                     </div>
 
@@ -41,7 +41,16 @@ const ManagerBatchDetails = ({ smartContractAddress, status, batchQuantity, crea
                     <div className="body-size text-white">
                         <strong>Creation Date: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            {creationDate}
+                            {new Date(Number(smartContractDetails.creation_date) * 1000)
+                                .toLocaleString("en-GB", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    hour12: false, // Ensures 24-hour format
+                                })}
                         </span>
                     </div>
 
@@ -49,8 +58,16 @@ const ManagerBatchDetails = ({ smartContractAddress, status, batchQuantity, crea
                     <div className="body-size text-white">
                         <strong>Latest Update: </strong>
                         <span style={{ fontWeight: "200", wordBreak: "break-word" }}>
-                            {/* 09/02/2025, 17:06:32 */}
-                            {latestUpdate}
+                            {new Date(Number(smartContractLatestUpdate.timestamp) * 1000)
+                                .toLocaleString("en-GB", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    hour12: false, // Ensures 24-hour format
+                                })}
                         </span>
                     </div>
                 </div>

@@ -4,46 +4,56 @@ import { Link } from "react-router-dom";
 import ManagerBatchDetails from "../components/ManagerBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
-import { getBatchDetails, getBatchUpdates, createNewSmartContract, updateBatch } from "../utils/BatchFactory";
-
+import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 
 const ManagerDashboard = () => {
-    const [smartContractBatchDetails, setSmartContractBatchDetails] = useState("");
-    const [smartContractBatches, setSmartContractBatches] = useState("");
-
-    const getBatchDetail = async () => {
-        const res = await getBatchDetails("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512")
-        setSmartContractBatchDetails(res);
-    }
-
-    const getBatchUpdate = async () => {
-        const res = await getBatchUpdates("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
-        setSmartContractBatches(res);
-    };
-
-    const { user } = useAuthContext();
-
     const [batches, setBatches] = useState([]);
-
+    const [batchDetails, setBatchDetails] = useState({}); // Stores smart contract data per batch
+    const { user } = useAuthContext();
+    // Fetch batches from the backend
     useEffect(() => {
         const getBatches = async () => {
             if (!user) return; // Ensures user exists before fetching
 
             const response = await fetch('/api/batch/all', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
+                headers: { 'Authorization': `Bearer ${user.token}` }
             });
-            const json = await response.json();
 
             if (response.ok) {
-                console.log(json)
+                const json = await response.json();
                 setBatches(json);
             }
         };
 
         getBatches();
     }, [user]);
+    // Fetch blockchain data for each batch
+    useEffect(() => {
+        const fetchSmartContractData = async () => {
+            const newBatchDetails = {};
+
+            await Promise.all(batches.map(async (batch) => {
+                try {
+                    const details = await getBatchDetails(batch.smart_contract_address);
+                    const updates = await getBatchUpdates(batch.smart_contract_address);
+                    const latestUpdate = updates?.length ? updates[updates.length - 1] : "No updates yet";
+
+                    newBatchDetails[batch.smart_contract_address] = {
+                        details,
+                        latestUpdate
+                    };
+                } catch (error) {
+                    console.error("Error fetching batch data:", error);
+                }
+            }));
+
+            setBatchDetails(newBatchDetails);
+        };
+
+        if (batches.length > 0) {
+            fetchSmartContractData();
+        }
+    }, [batches]);
 
     // Group batches by supply_chain_id
     const groupedBatches = batches.reduce((acc, batch) => {
@@ -53,7 +63,6 @@ const ManagerDashboard = () => {
         acc[batch.supply_chain_id].push(batch);
         return acc;
     }, {});
-
 
     return (
         <div className="main-content">
@@ -65,15 +74,12 @@ const ManagerDashboard = () => {
                 </span>
             </div>
 
-
             <div className="row g-2 mb-2">
-
                 <Link to="newBatch" className="text-decoration-none col-12 col-md-6 col-lg-3">
                     <div className="button border primary-bg text-white rounded text-center py-3 w-100">
                         <span className="mx-2">New Batch</span>
                     </div>
                 </Link>
-
 
                 <Link to="newSupplyChain" className="text-decoration-none col-12 col-md-6 col-lg-3">
                     <div className="button border primary-bg text-white rounded text-center py-3 w-100">
@@ -91,9 +97,6 @@ const ManagerDashboard = () => {
                             placeholder="Search smart contract address or supply chain ID..."
                             className="border-start-0 py-3"
                         />
-                        {/* <Button variant="dark" style={{ backgroundColor: "#661A25", border: "none", borderRadius: "5px" }} className='px-5'>
-                            <Link to="/batchTimeline" className="text-decoration-none text-white">Search</Link>
-                        </Button> */}
                     </InputGroup>
                 </div>
             </div>
@@ -103,43 +106,27 @@ const ManagerDashboard = () => {
                 Object.keys(groupedBatches).map((supplyChainId) => (
                     <div key={supplyChainId} className="mb-4">
                         <h3 className="heading-3-size primary-colour">Supply Chain: {supplyChainId}</h3>
-                        {groupedBatches[supplyChainId].map((batch) => (
-                            <ManagerBatchDetails
-                                key={batch.smart_contract_address}
-                                smartContractAddress={batch.smart_contract_address}
-                                status={"-- dummy text --"}
-                                batchQuantity={"-- dummy text --"}
-                                creationDate={"-- dummy text --"}
-                                latestUpdate={"-- dummy text --"}
-                                products={batch.products}
-                                type="Manager"
-                            />
-                        ))}
+                        {groupedBatches[supplyChainId].map((batch) => {
+                            const contractData = batchDetails[batch.smart_contract_address];
+                            return contractData ? (
+                                <ManagerBatchDetails
+                                    key={batch.smart_contract_address}
+                                    smartContractAddress={batch.smart_contract_address}
+                                    smartContractDetails={contractData.details[0]}
+                                    smartContractLatestUpdate={contractData.latestUpdate}
+                                    products={batch.products}
+                                />
+                            ) : <p key={batch.smart_contract_address}>Loading batch data...</p>;
+                        })}
                     </div>
                 ))
             ) : (
                 <p>No batches created yet</p>
             )}
-            <div>
-                <h1>Smart Contract - Batch details</h1>
-                <button onClick={getBatchDetail}>Get batch details</button>
-                <p>batch details: {smartContractBatchDetails}</p>
 
-                <h1>Smart Contract - Batch updates</h1>
-                <button onClick={getBatchUpdate}>Get batch updates</button>
-                <p>batch updates: {smartContractBatches}</p>
-
-                <h1>Create new smart contract</h1>
-                <button onClick={createNewSmartContract}>New</button>
-
-                <h1>update smart contract</h1>
-                <button onClick={updateBatch}>Update</button>
-
-
-            </div>
 
         </div>
-    )
-}
+    );
+};
 
 export default ManagerDashboard;

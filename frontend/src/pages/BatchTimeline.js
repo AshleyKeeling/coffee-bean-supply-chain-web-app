@@ -14,6 +14,7 @@ import distributionIcon from '../assets/icons/distributionIcon.png';
 import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 
 const BatchTimeline = () => {
@@ -29,7 +30,7 @@ const BatchTimeline = () => {
         const updates = await getBatchUpdates(smartContractAddress);
         setSmartContractUpdates(updates);
 
-        console.log("herere" + smartContractUpdates)
+        console.log("herere" + await smartContractUpdates)
     }
 
 
@@ -37,6 +38,18 @@ const BatchTimeline = () => {
         getSmartContractData();
         // eslint-disable-next-line 
     }, [smartContractAddress]);
+
+    // calculates the duration of each stage(roundes it to 1 decimal) e.g. cultivation - 90.3
+    const data = [
+        { name: 'Cultivation', value: (Number(smartContractUpdates[1]?.timestamp - smartContractUpdates[0]?.timestamp) / 86400).toFixed(1) },
+        { name: 'Harvesting', value: (Number(smartContractUpdates[2]?.timestamp - smartContractUpdates[1]?.timestamp) / 86400).toFixed(1) },
+        { name: 'Processing', value: (Number(smartContractUpdates[3]?.timestamp - smartContractUpdates[2]?.timestamp) / 86400).toFixed(1) },
+        { name: 'Drying', value: (Number(smartContractUpdates[4]?.timestamp - smartContractUpdates[3]?.timestamp) / 86400).toFixed(1) },
+        { name: 'Exporting', value: (Number(smartContractUpdates[5]?.timestamp - smartContractUpdates[4]?.timestamp) / 86400).toFixed(1) },
+        { name: 'Roasting', value: (Number(smartContractUpdates[6]?.timestamp - smartContractUpdates[5]?.timestamp) / 86400).toFixed(1) },
+        { name: 'Packaging', value: (Number(smartContractUpdates[7]?.timestamp - smartContractUpdates[6]?.timestamp) / 86400).toFixed(1) },
+        { name: 'Distribution', value: (Number(smartContractUpdates[8]?.timestamp - smartContractUpdates[7]?.timestamp) / 86400).toFixed(1) }
+    ];
 
     const stages = [
         { name: "Cultivation", key: "farmer", icon: cultivationIcon },
@@ -48,6 +61,15 @@ const BatchTimeline = () => {
         { name: "Packaging", key: "packaging_specialist", icon: packagingIcon },
         { name: "Distribution", key: "distributor", icon: distributionIcon }
     ];
+
+    const shortFormatTimestamp = (timestamp) => {
+        return new Date(Number(timestamp) * 1000)
+            .toLocaleString("en-GB", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+            });
+    };
 
 
     return (
@@ -71,10 +93,11 @@ const BatchTimeline = () => {
                     <h2>Track Your Coffee’s Journey</h2>
                     <div className="col-12 col-lg-6">
                         <p className="body-size">This batch timeline provides a detailed record of your coffee’s journey through the supply chain. Each stage—cultivation, harvesting, processing, and beyond—is securely recorded on the Ethereum blockchain, ensuring tamper-proof transparency. Ethereum’s decentralized network guarantees that it cannot be altered once data is recorded, making supply chain information trustworthy, verifiable and authentic—<a href="https://www.investopedia.com/terms/e/ethereum.asp" target="_blank" rel="noopener noreferrer" className="text-black"><strong>More information about Ethereum.</strong></a></p>
+
                         <p className='body-size'>By tracking your coffee here, you can see where it has been, who has handled it, and its status through the supply chain. This ensures authenticity, fair sourcing, and consumer trust in every batch.</p>
 
                         {/* TO BE MODIFIED TO ALLOW VALUES TO BE INSRTED */}
-                        <p className='body-size'>This batch of <strong>520 Arabica coffee beans</strong> originated from <strong>Brazil</strong> and moved through the supply chain from <strong>01/01/2025</strong> to <strong>01/02/2025</strong>. It was processed using the <strong>dry/natural</strong> method and roasted to a <strong>light profile</strong> in <strong>London, UK</strong>. The supply chain stages were securely recorded on the <strong>Ethereum blockchain</strong> (SC-0001-25). The batch was delivered to retailers on 01/02/2025 for consumer purchase.</p>
+                        <p className='body-size'>This batch of <strong>{smartContractUpdates[3]?.batch_quantity} Arabica coffee beans</strong> originated from <strong>{smartContractDetails[0]?.origin}</strong> and moved through the supply chain from <strong>{shortFormatTimestamp(smartContractDetails[0]?.creation_date)}</strong> to <strong>{shortFormatTimestamp(smartContractUpdates[smartContractUpdates.length - 1]?.timestamp)}</strong>. It was processed using the <strong>{smartContractDetails[0]?.processing_type}</strong> processing method and roasted to a <strong>{smartContractDetails[0]?.roasting_type} profile</strong> in <strong>{smartContractUpdates[6]?.location}</strong>. The supply chain stages were securely recorded on the <strong>Ethereum blockchain</strong>. The batch was delivered to retailers on <strong>{shortFormatTimestamp(smartContractUpdates[8]?.timestamp)}</strong> for consumer purchase.</p>
                     </div>
                     <div className="col-12 col-lg-6">
                         <img src={coffeeSupplyChain} alt="three sections, coffee beans, plants, cofee" className='image-fluid rounded w-100' />
@@ -120,7 +143,22 @@ const BatchTimeline = () => {
                         })}
                     </ul>
                 ) : (<p>Invalid address/ID or No Updates available yet</p>)}
-
+                <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={data}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis
+                            label={{
+                                value: 'Days',
+                                angle: -90,
+                                position: 'insideLeft',
+                                dy: 50
+                            }}
+                        />
+                        <Tooltip />
+                        <Bar dataKey="value" fill="#8884d8" />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
         </div>
     )

@@ -1,13 +1,6 @@
 const { ethers } = require("hardhat");
 
 async function main() {
-    // Deploy BatchFactory
-    const BatchFactory = await ethers.getContractFactory("BatchFactory");
-    const batchFactory = await BatchFactory.deploy();
-    await batchFactory.waitForDeployment(); // <- Use `deployed()` instead of `waitForDeployment()`
-
-    console.log("BatchFactory deployed to:", await batchFactory.getAddress());
-
     // each address is on the hardhat node
     const participants = [
         "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", "0x70997970C51812dc3A010C7d01b50e0d17dc79C8", "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC", "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
@@ -26,7 +19,7 @@ async function main() {
     ];
 
     const batch_1_initial_update = [
-        756,
+        7,
         "Brazil Farm",
         "Farmer",
         "N/A",
@@ -41,124 +34,38 @@ async function main() {
     await batch_1.waitForDeployment();
 
     console.log("Sample Batch deployed to:", await batch_1.getAddress());
+    async function increaseTimeAndMine(days, hours = 0, minutes = 0) {
+        const timeIncrement = (days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60); // Convert to seconds
+        await ethers.provider.send("evm_increaseTime", [timeIncrement]);
+        await ethers.provider.send("evm_mine"); // Mine a new block to apply the time change
+    }
 
-    const batch_1_update_2 = await batch_1.updateBatch(
-        752,
-        "Brazil Farm",
-        "Farmer",
-        "N/A",
-        "Harvesting",
-        "All crops planted",
-        "All went to plan",
-    )
+    // Simulate realistic supply chain timeline
+    await increaseTimeAndMine(90, 6, 15); // Cultivation takes time (90 days, plus 6 hours, 15 min)
+    await batch_1.updateBatch(7, "Brazil Farm", "Farmer", "N/A", "Harvesting", "Crops matured and ready for harvest", "Favourable weather led to a healthy yield.");
 
-    const batch_1_update_3 = await batch_1.updateBatch(
-        752,
-        "Brazil Farm",
-        "Harvestor",
-        "Cultivation",
-        "Processing",
-        "Coffee beans collected",
-        "All coffee beans collected and ready for the next stage",
-    )
+    await increaseTimeAndMine(7, 4, 30); // Harvesting is a quick process (7 days, 4 hours, 30 min)
+    await batch_1.updateBatch(7, "Brazil Farm", "Harvester", "Cultivation", "Processing", "Beans harvested", "Collected and sorted, separating defects.");
 
-    const batch_1_update_4 = await batch_1.updateBatch(
-        752,
-        "Brazil Farm",
-        "Processor",
-        "Harvesting",
-        "Drying",
-        "Beans processed",
-        "Dry/natural method used for enhanced flavour profile",
-    )
+    await increaseTimeAndMine(3, 2, 10); // Immediate transition to processing (3 days, 2 hours, 10 min)
+    await batch_1.updateBatch(7, "Brazil Farm", "Processor", "Harvesting", "Drying", "Beans pulped and fermented", "Wet processing completed to remove mucilage.");
 
-    const batch_1_update_5 = await batch_1.updateBatch(
-        752,
-        "Brazil Farm",
-        "Drying Specialist",
-        "Processing",
-        "Exporting",
-        "Beans sun dried",
-        "Beans reached the ideal moisture level for storage",
-    )
+    await increaseTimeAndMine(14, 5, 20); // Drying takes weeks (14 days, 5 hours, 20 min)
+    await batch_1.updateBatch(7, "Brazil Farm", "Drying Specialist", "Processing", "Exporting", "Beans sun-dried to 12% moisture", "Ideal moisture level reached, ready for export.");
 
-    const batch_1_update_6 = await batch_1.updateBatch(
-        752,
-        "Brazil Farm",
-        "Exporter",
-        "Drying",
-        "Roasting",
-        "In transit",
-        "Shipment has been dispatched and is en route to its destination",
-    )
+    await increaseTimeAndMine(10, 8, 45); // Export preparation & shipment delay (10 days, 8 hours, 45 min)
+    await batch_1.updateBatch(7, "Brazil Port", "Exporter", "Drying", "Roasting", "Beans exported to the UK", "Shipment loaded and en route to roastery.");
 
-    const batch_1_update_7 = await batch_1.updateBatch(
-        752,
-        "London, UK",
-        "Roaster",
-        "Exporting",
-        "Packaging",
-        "Roasting complete",
-        "Beans roasted to a light profile, preserving acidity and complexity",
-    )
+    await increaseTimeAndMine(21, 7, 5); // Shipping time (21 days, 7 hours, 5 min)
+    await batch_1.updateBatch(7, "London, UK", "Roaster", "Exporting", "Packaging", "Beans roasted to a light profile", "Optimal flavour developed after test batches.");
 
-    const batch_1_update_8 = await batch_1.updateBatch(
-        752,
-        "London, UK",
-        "Packaging Specialist",
-        "Roasting",
-        "Distribution",
-        "Packaged and sealed",
-        "Nitrogen-flushed packaging used to maintain freshness",
-    )
+    await increaseTimeAndMine(5, 3, 55); // Short time between roasting and packaging (5 days, 3 hours, 55 min)
+    await batch_1.updateBatch(7, "London, UK", "Packaging Specialist", "Roasting", "Distribution", "Packaged and sealed", "Vacuum-sealed to maintain freshness.");
 
-    const batch_1_update_9 = await batch_1.updateBatch(
-        752,
-        "London, UK",
-        "Distributor",
-        "Packaging",
-        "Consumer",
-        "Deliverd to retailor",
-        "Product is now available for purchase and consumption",
-    )
+    await increaseTimeAndMine(7, 6, 40); // Distribution logistics (7 days, 6 hours, 40 min)
+    await batch_1.updateBatch(7, "London, UK", "Distributor", "Packaging", "Consumer", "Delivered to retailer", "Stock now available for sale.");
 
-    console.log("Second update transaction sent:", batch_1_update_2.hash);
-    console.log("Second update transaction sent:", batch_1_update_3.hash);
-    console.log("Second update transaction sent:", batch_1_update_4.hash);
-    console.log("Second update transaction sent:", batch_1_update_5.hash);
-    console.log("Second update transaction sent:", batch_1_update_6.hash);
-    console.log("Second update transaction sent:", batch_1_update_7.hash);
-    console.log("Second update transaction sent:", batch_1_update_8.hash);
-    console.log("Second update transaction sent:", batch_1_update_9.hash);
-
-
-    // batch 1 details
-    const batch_2_Details = [
-        "SC-001-25",
-        Math.floor(Date.now() / 1000),
-        "Brazil",
-        "Arabica",
-        "Light",
-        "Honey"
-    ];
-
-    const batch_2_initial_update = [
-        756,
-        "Brazil Farm",
-        "Farmer",
-        "N/A",
-        "Cultivation",
-        "Batch Created",
-        "Initial batch creation",
-        Math.floor(Date.now() / 1000)
-    ];
-
-    const Batch_2 = await ethers.getContractFactory("Batch");
-    const batch_2 = await Batch_2.deploy(batch_2_Details, participants, batch_2_initial_update);
-    await batch_2.waitForDeployment();
-
-    console.log("Sample Batch deployed to:", await batch_2.getAddress());
-
+    console.log("Batch updates completed with realistic timestamps.");
 }
 
 main().catch((error) => {

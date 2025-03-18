@@ -6,10 +6,6 @@ import React from "react";
 import { getBatchDetails, getBatchUpdates, updateBatch } from "../utils/BatchFactory";
 import { useAuthContext } from '../hooks/useAuthContext';
 
-
-
-
-
 const UpdateBatch = () => {
     const [currentLocation, setCurrentLocation] = useState('');
     const [status, setStatus] = useState('');
@@ -31,7 +27,7 @@ const UpdateBatch = () => {
 
     const getSmartContractData = async (smart_contract_address) => {
         const details = await getBatchDetails(smart_contract_address)
-        setSmartContractDetails(details);
+        setSmartContractDetails(details[0]);
 
         const updates = await getBatchUpdates(smart_contract_address);
         setLatestSmartContractUpdate(updates[updates.length - 1]);
@@ -56,8 +52,20 @@ const UpdateBatch = () => {
             additionalNotes
         )
         alert("current location: " + currentLocation + "\nstatus: " + status + "\nadditional notes: " + additionalNotes)
-
     }
+
+    const longFormatTimestamp = (timestamp) => {
+        return new Date(Number(timestamp) * 1000)
+            .toLocaleString("en-GB", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false, // Ensures 24-hour format
+            });
+    };
 
     return (
         <div className="main-content">
@@ -65,7 +73,7 @@ const UpdateBatch = () => {
                 <span className="col-12 col-md-3">
                     <BackButton />
                 </span>
-                <h1 className="col-12 col-md-8 heading-1-size">Supply Chain: </h1>
+                <h1 className="col-12 col-md-8 heading-1-size">Supply Chain: {batch.supply_chain_id}</h1>
             </div>
             <div className="heading-4-size primary-colour mb-4">
                 <strong>Smart Contract Address:</strong>
@@ -83,23 +91,23 @@ const UpdateBatch = () => {
                     </div>
                     <div class="col-6 col-md-6">
                         <ul class="text-white list-unstyled heading-4-size">
-                            <li>Creation date: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Bean type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Origin: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Batch quantity: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Processing type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Roasting type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Latest update: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
+                            <li>Creation date: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{longFormatTimestamp(smartContractDetails.creation_date)}</span></li>
+                            <li>Bean type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.bean_type}</span></li>
+                            <li>Origin: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.origin}</span></li>
+                            <li>Batch quantity: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.batch_quantity}</span></li>
+                            <li>Processing type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.processing_type}</span></li>
+                            <li>Roasting type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.roasting_type}</span></li>
+                            <li>Latest update: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{longFormatTimestamp(latestSmartContractUpdate.timestamp)}</span></li>
                         </ul>
                     </div>
                     <div class="col-6 col-md-6">
                         <ul class="text-white list-unstyled heading-4-size">
-                            <li>Current holder: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Previous stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Next stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Current location: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Status: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Additional notes: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
+                            <li>Current holder: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.current_holder}</span></li>
+                            <li>Previous stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.previous_stage}</span></li>
+                            <li>Next stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.next_stage}</span></li>
+                            <li>Current location: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.location}</span></li>
+                            <li>Status: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.status}</span></li>
+                            <li>Additional notes: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.additional_notes}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -112,23 +120,22 @@ const UpdateBatch = () => {
                     </div>
                     <div class="col-6 col-md-6">
                         <ul class="text-white list-unstyled heading-4-size">
-                            <li>Creation date: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Bean type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Origin: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Batch quantity: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Processing type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Roasting type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Latest update: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
+                            <li>Bean type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.bean_type}</span></li>
+                            <li>Origin: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.origin}</span></li>
+                            <li>Batch quantity: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.batch_quantity}</span></li>
+                            <li>Processing type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.processing_type}</span></li>
+                            <li>Roasting type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.roasting_type}</span></li>
+                            <li>Latest update: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{longFormatTimestamp(Date.now() / 1000)}</span></li>
                         </ul>
                     </div>
                     <div class="col-6 col-md-6">
                         <ul class="text-white list-unstyled heading-4-size">
-                            <li>Current holder: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
+                            <li>Current holder: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{user.role}</span></li>
                             <li>Previous stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
                             <li>Next stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Current location: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Status: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Additional notes: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
+                            <li>Current location: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{currentLocation}</span></li>
+                            <li>Status: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{status}</span></li>
+                            <li>Additional notes: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{additionalNotes}</span></li>
                         </ul>
                     </div>
                 </div>

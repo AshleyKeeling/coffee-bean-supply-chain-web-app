@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import React from 'react';
 
-const ManagerBatchDetails = ({ smartContractAddress, smartContractDetails, smartContractLatestUpdate, products }) => {
+const ManagerBatchDetails = ({ progress, smartContractAddress, smartContractDetails, smartContractLatestUpdate, products }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -11,7 +11,7 @@ const ManagerBatchDetails = ({ smartContractAddress, smartContractDetails, smart
             <div className="row">
                 <div className="col-12 col-md-8 mb-2">
                     {/* progress bar */}
-                    <progress value={0.5} />
+                    <progress value={progress} />
 
                     {/* smart contract address */}
                     <div className="body-size text-white">

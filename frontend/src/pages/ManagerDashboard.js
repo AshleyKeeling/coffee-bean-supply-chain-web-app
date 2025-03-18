@@ -9,6 +9,7 @@ import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 const ManagerDashboard = () => {
     const [batches, setBatches] = useState([]);
     const [batchDetails, setBatchDetails] = useState({}); // Stores smart contract data per batch
+
     const { user } = useAuthContext();
     // Fetch batches from the backend
     useEffect(() => {
@@ -37,9 +38,10 @@ const ManagerDashboard = () => {
                     const details = await getBatchDetails(batch.smart_contract_address);
                     const updates = await getBatchUpdates(batch.smart_contract_address);
                     const latestUpdate = updates?.length ? updates[updates.length - 1] : "No updates yet";
-
+                    const updatesLength = updates.length;
                     newBatchDetails[batch.smart_contract_address] = {
                         details,
+                        updatesLength,
                         latestUpdate
                     };
                 } catch (error) {
@@ -111,6 +113,8 @@ const ManagerDashboard = () => {
                             return contractData ? (
                                 <ManagerBatchDetails
                                     key={batch.smart_contract_address}
+                                    // calculates progress between 0.0 and 1.0 depending on what stage the batch is upto.
+                                    progress={((contractData.updatesLength - 1) / 8) / 1}
                                     smartContractAddress={batch.smart_contract_address}
                                     smartContractDetails={contractData.details[0]}
                                     smartContractLatestUpdate={contractData.latestUpdate}

@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import React from 'react';
 
-const ParticipantBatchDetails = ({ batch, status, batchQuantity, creationDate, latestUpdate }) => {
-
+const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creationDate, latestUpdate }) => {
+    console.log(progress)
     return (
         <div className="primary-bg rounded p-2 mb-2">
             <div className="row">
                 <div className="col-12 col-md-8 mb-2">
                     {/* progress bar */}
-                    <progress value={0.5} />
+                    <progress value={progress} />
 
                     {/* smart contract address */}
                     <div className="body-size text-white">

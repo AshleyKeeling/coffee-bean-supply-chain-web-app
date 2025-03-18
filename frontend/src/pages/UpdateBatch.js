@@ -1,10 +1,10 @@
 import BackButton from "../components/BackButton";
 import { useEffect, useState } from "react";
-import { useNewBatch } from "../hooks/useNewBatch";
 import { useLocation } from 'react-router-dom';
 import React from "react";
-import { getBatchDetails, getBatchUpdates, updateBatch } from "../utils/BatchFactory";
+import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useUpdateBatch } from "../hooks/useUpdateBatch";
 
 const UpdateBatch = () => {
     const [currentLocation, setCurrentLocation] = useState('');
@@ -15,8 +15,8 @@ const UpdateBatch = () => {
     const [smartContractDetails, setSmartContractDetails] = useState("");
     const [latestSmartContractUpdate, setLatestSmartContractUpdate] = useState("");
 
+    const { updateSmartContract, error, isLoading } = useUpdateBatch();
 
-    const { error, isLoading } = useNewBatch();
 
     const location = useLocation();
     const batch = location.state?.batch;
@@ -41,7 +41,7 @@ const UpdateBatch = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(batch)
-        updateBatch(
+        updateSmartContract(
             batch.smart_contract_address,
             latestSmartContractUpdate.batch_quantity,
             currentLocation,

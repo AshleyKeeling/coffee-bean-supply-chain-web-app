@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+
 // Replace with your deployed contract addresses
 // const factoryContractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
 const batchContractABI = require("../abi/Batch.json"); // ABI of Batch contract
@@ -126,6 +127,7 @@ export async function updateBatch(
     additional_notes
 ) {
     try {
+
         if (!window.ethereum) throw new Error("MetaMask not installed!");
 
         const provider = new ethers.BrowserProvider(window.ethereum);
@@ -154,9 +156,13 @@ export async function updateBatch(
 
         console.log("Batch updated successfully!");
         alert("Batch updated successfully!");
+        return (true);
 
     } catch (error) {
+
         console.error("Error updating batch:", error);
         alert("Failed to update batch. See console for details.");
+        return (false);
     }
+
 }

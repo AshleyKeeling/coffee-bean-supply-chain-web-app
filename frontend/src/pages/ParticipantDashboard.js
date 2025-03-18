@@ -38,9 +38,11 @@ const ParticipantDashboard = () => {
                 const details = await getBatchDetails(batch.smart_contract_address);
                 const updates = await getBatchUpdates(batch.smart_contract_address);
                 const latestUpdate = updates?.[updates.length - 1];
+                const updatesLength = updates.length;
 
                 newBatchDetails[batch.smart_contract_address] = {
                     details,
+                    updatesLength,
                     latestUpdate
                 };
             }));
@@ -96,6 +98,8 @@ const ParticipantDashboard = () => {
                             return contractData ? (
                                 <ParticipantBatchDetails
                                     key={batch.smart_contract_address}
+                                    // calculates progress between 0.0 and 1.0 depending on what stage the batch is upto.
+                                    progress={((contractData.updatesLength - 1) / 8) / 1}
                                     batch={batch}
                                     status={contractData.latestUpdate?.status}
                                     batchQuantity={contractData.latestUpdate?.batch_quantity}

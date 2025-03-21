@@ -17,6 +17,7 @@ const UpdateBatch = () => {
     const [amountOfSmartContractUpdates, setAmountOfSmartContractUpdates] = useState(0);
 
     const { updateSmartContract, error, isLoading } = useUpdateBatch();
+    const [selectedProducts, setSelectedProducts] = useState([]);
 
 
     const location = useLocation();
@@ -36,6 +37,16 @@ const UpdateBatch = () => {
         console.log(amountOfSmartContractUpdates);
     }
 
+    const handleCheckboxChange = (productId, isChecked) => {
+        if (isChecked) {
+            // Add the product ID to the list
+            setSelectedProducts((prev) => [...prev, productId]);
+        } else {
+            // Remove the product ID from the list
+            setSelectedProducts((prev) => prev.filter((id) => id !== productId));
+        }
+    };
+
     // gets smart contract data for this batch
     useEffect(() => {
         getSmartContractData(batch.smart_contract_address)
@@ -46,13 +57,14 @@ const UpdateBatch = () => {
         console.log(batch)
         updateSmartContract(
             batch.smart_contract_address,
-            latestSmartContractUpdate.batch_quantity,
+            Number(latestSmartContractUpdate.batch_quantity) - selectedProducts.length,
             currentLocation,
             user.role,
             "previous_stage",
             "next_stage",
             status,
-            additionalNotes
+            additionalNotes,
+            selectedProducts
         )
         alert("current location: " + currentLocation + "\nstatus: " + status + "\nadditional notes: " + additionalNotes)
     }
@@ -72,7 +84,6 @@ const UpdateBatch = () => {
 
 
     const stages = [
-
         "Cultivation",
         "Harvesting",
         "Processing",
@@ -138,7 +149,7 @@ const UpdateBatch = () => {
                         <ul class="text-white list-unstyled heading-4-size">
                             <li>Bean type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.bean_type}</span></li>
                             <li>Origin: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.origin}</span></li>
-                            <li>Batch quantity: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{latestSmartContractUpdate.batch_quantity}</span></li>
+                            <li>Batch quantity: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{Number(latestSmartContractUpdate.batch_quantity) - selectedProducts.length}</span></li>
                             <li>Processing type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.processing_type}</span></li>
                             <li>Roasting type: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{smartContractDetails.roasting_type}</span></li>
                             <li>Latest update: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{longFormatTimestamp(Date.now() / 1000)}</span></li>
@@ -200,12 +211,15 @@ const UpdateBatch = () => {
                         onChange={(e) => setIsOpen(e.target.checked)}
                     />
                     <label className="body-size">Reduce Quantity?</label>
+                    <p>Selected: ({selectedProducts.length})</p>
+
                     {isOpen && (
                         <table className="w-100 tertiary-bg rounded text-white body-size products-table p-2 mt-3 mt-lg-0">
                             <thead>
                                 <tr>
                                     <th><strong>Product ID</strong></th>
                                     <th><strong>Status</strong></th>
+                                    <th><strong>Remove?</strong></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -215,9 +229,21 @@ const UpdateBatch = () => {
                                             <tr style={{ fontWeight: "300", wordBreak: "break-word" }}>
                                                 <td>{product.product_id}</td>
                                                 <td>{product.status}</td>
+                                                <td>
+                                                    {/* Conditionally render the Remove button/checkbox */}
+                                                    {product.status !== "Destroyed" ? (
+                                                        <input
+                                                            type="checkbox"
+                                                            onChange={(e) => handleCheckboxChange(product.product_id, e.target.checked)}
+                                                            checked={selectedProducts.includes(product.product_id)}
+                                                        />
+                                                    ) : (
+                                                        <span style={{ color: "gray" }}>Destroyed</span> // Optional, if you want to show a message
+                                                    )}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td colSpan="2">
+                                                <td colSpan="4">
                                                     <hr style={{ border: "none", borderTop: "2px solid white", opacity: 1 }} />
                                                 </td>
                                             </tr>
@@ -225,7 +251,7 @@ const UpdateBatch = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="2" className="text-center">No products</td>
+                                        <td colSpan="4" className="text-center">No products</td>
                                     </tr>
                                 )}
                             </tbody>

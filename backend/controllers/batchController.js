@@ -39,9 +39,6 @@ const newBatch = async (req, res) => {
     const { origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses } = req.body;
     console.log(origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses)
     try {
-
-
-
         const exists = await Batch.findOne({ smart_contract_address });
 
         if (exists) {
@@ -111,4 +108,30 @@ const getBatch = async (req, res) => {
     }
 }
 
-module.exports = { verifyBatchDetails, newBatch, getAllBatches, getBatch };
+const updateBatch = async (req, res) => {
+    const { selected_products } = req.body;
+    try {
+        // Loop through selected products and update their status
+        for (let i = 0; i < selected_products.length; i++) {
+            const product = await Product.findOneAndUpdate(
+                { product_id: selected_products[i] },  // Filter by product_id, not by _id
+                { status: "Destroyed" },
+                { new: true }  // Ensure the updated product is returned
+            );
+
+            // If no product is found or updated, return an error
+            if (!product) {
+                return res.status(404).json({ error: `Product with ID ${selected_products[i]} not found` });
+            }
+        }
+
+        // If all updates are successful, send a success response
+        res.status(200).json({ message: 'Batch updated successfully' });
+
+    } catch (error) {
+        // If an error occurs during the process, send a failure response
+        res.status(400).json({ error: error.message });
+    }
+}
+
+module.exports = { verifyBatchDetails, newBatch, getAllBatches, getBatch, updateBatch };

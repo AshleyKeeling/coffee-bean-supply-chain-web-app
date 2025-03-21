@@ -1,8 +1,36 @@
 import { Link } from "react-router-dom";
 import React from 'react';
 
-const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creationDate, latestUpdate }) => {
-    console.log(progress)
+const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creationDate, latestUpdate, previousCurrentHolder, userRole }) => {
+
+    const stages = [
+        "Farmer",
+        "Harvestor",
+        "Processor",
+        "Drying Specialist",
+        "Exporter",
+        "Roaster",
+        "Packaging Specialist",
+        "Distributor"
+    ];
+
+    let state = "";
+
+    const previousCurrentHolderIndex = stages.indexOf(previousCurrentHolder);
+    const userRoleIndex = stages.indexOf(userRole);
+
+    // works out if user is applicable for updating the batch.
+    if (userRoleIndex <= previousCurrentHolderIndex) {
+        state = "completed";
+    } else if (userRoleIndex == (previousCurrentHolderIndex + 1)) {
+        state = "update";
+    } else {
+        state = "Not ready for update yet";
+
+    }
+
+    console.log(state)
+
     return (
         <div className="primary-bg rounded p-2 mb-2">
             <div className="row">
@@ -52,17 +80,24 @@ const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creat
                     </div>
                 </div>
                 <div className="d-flex flex-column justify-content-center col-12 col-md-4 col-lg-4">
-                    {console.log(batch)}
-                    <Link
-                        to="updateBatch"
-                        state={{ batch }}
-                        className="text-decoration-none"
-                    >
-                        <div className="button tertiary-bg text-white rounded text-center py-3 w-100 mb-2">
-                            <span className="mx-2">Update</span>
-                        </div>
-                    </Link>
 
+                    {state == "update" ? (
+                        <Link
+                            to="updateBatch"
+                            state={{ batch }}
+                            className="text-decoration-none"
+                        >
+                            <div className="button tertiary-bg text-white rounded text-center py-3 w-100 mb-2">
+                                <span className="mx-2">Update</span>
+                            </div>
+                        </Link>
+                    )
+                        : (
+                            <div className="text-white rounded text-center py-3 w-100 mb-2">
+                                <span className="mx-2">{state}</span>
+                            </div>
+                        )
+                    }
 
 
                 </div>

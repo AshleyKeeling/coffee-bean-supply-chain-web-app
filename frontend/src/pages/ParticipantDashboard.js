@@ -123,6 +123,8 @@ const ParticipantDashboard = () => {
                                             second: "2-digit",
                                             hour12: false, // Ensures 24-hour format
                                         })}
+                                    previousCurrentHolder={contractData.latestUpdate?.current_holder}
+                                    userRole={user.role}
                                 />
                             ) : <p key={batch.smart_contract_address}>Loading batch data...</p>;
                         })}

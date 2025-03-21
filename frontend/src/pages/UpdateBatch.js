@@ -14,6 +14,7 @@ const UpdateBatch = () => {
     // smart contract data
     const [smartContractDetails, setSmartContractDetails] = useState("");
     const [latestSmartContractUpdate, setLatestSmartContractUpdate] = useState("");
+    const [amountOfSmartContractUpdates, setAmountOfSmartContractUpdates] = useState(0);
 
     const { updateSmartContract, error, isLoading } = useUpdateBatch();
 
@@ -31,6 +32,8 @@ const UpdateBatch = () => {
 
         const updates = await getBatchUpdates(smart_contract_address);
         setLatestSmartContractUpdate(updates[updates.length - 1]);
+        setAmountOfSmartContractUpdates(updates.length);
+        console.log(amountOfSmartContractUpdates);
     }
 
     // gets smart contract data for this batch
@@ -66,6 +69,19 @@ const UpdateBatch = () => {
                 hour12: false, // Ensures 24-hour format
             });
     };
+
+
+    const stages = [
+
+        "Cultivation",
+        "Harvesting",
+        "Processing",
+        "Drying",
+        "Exporting",
+        "Roasting",
+        "Packaging",
+        "Distribution"
+    ];
 
     return (
         <div className="main-content">
@@ -131,8 +147,8 @@ const UpdateBatch = () => {
                     <div class="col-6 col-md-6">
                         <ul class="text-white list-unstyled heading-4-size">
                             <li>Current holder: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{user.role}</span></li>
-                            <li>Previous stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
-                            <li>Next stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>-- dummy text --</span></li>
+                            <li>Previous stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{stages[amountOfSmartContractUpdates - 1]}</span></li>
+                            <li>Next stage: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{stages[amountOfSmartContractUpdates]}</span></li>
                             <li>Current location: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{currentLocation}</span></li>
                             <li>Status: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{status}</span></li>
                             <li>Additional notes: <span style={{ fontWeight: "200", wordBreak: "break-word" }}>{additionalNotes}</span></li>

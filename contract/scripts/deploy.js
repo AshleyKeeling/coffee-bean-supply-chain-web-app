@@ -1,4 +1,4 @@
-const { ethers } = require("hardhat");
+require('hardhat');
 
 async function main() {
     // each address is on the hardhat node

@@ -19,7 +19,7 @@ async function main() {
     ];
 
     const batch_1_initial_update = [
-        7,
+        500,
         "Brazil Farm",
         "Farmer",
         "N/A",
@@ -42,28 +42,28 @@ async function main() {
 
     // Simulate realistic supply chain timeline
     await increaseTimeAndMine(90, 6, 15); // Cultivation takes time (90 days, plus 6 hours, 15 min)
-    await batch_1.updateBatch(7, "Brazil Farm", "Farmer", "N/A", "Harvesting", "Crops matured and ready for harvest", "Favourable weather led to a healthy yield.");
+    await batch_1.updateBatch(500, "Brazil Farm", "Farmer", "N/A", "Harvesting", "Crops matured and ready for harvest", "Favourable weather led to a healthy yield.");
 
     await increaseTimeAndMine(7, 4, 30); // Harvesting is a quick process (7 days, 4 hours, 30 min)
-    await batch_1.updateBatch(7, "Brazil Farm", "Harvester", "Cultivation", "Processing", "Beans harvested", "Collected and sorted, separating defects.");
+    await batch_1.updateBatch(495, "Brazil Farm", "Harvester", "Cultivation", "Processing", "Beans harvested", "Collected and sorted, separating defects.");
 
     await increaseTimeAndMine(3, 2, 10); // Immediate transition to processing (3 days, 2 hours, 10 min)
-    await batch_1.updateBatch(7, "Brazil Farm", "Processor", "Harvesting", "Drying", "Beans pulped and fermented", "Wet processing completed to remove mucilage.");
+    await batch_1.updateBatch(490, "Brazil Farm", "Processor", "Harvesting", "Drying", "Beans pulped and fermented", "Wet processing completed to remove mucilage.");
 
     await increaseTimeAndMine(14, 5, 20); // Drying takes weeks (14 days, 5 hours, 20 min)
-    await batch_1.updateBatch(7, "Brazil Farm", "Drying Specialist", "Processing", "Exporting", "Beans sun-dried to 12% moisture", "Ideal moisture level reached, ready for export.");
+    await batch_1.updateBatch(487, "Brazil Farm", "Drying Specialist", "Processing", "Exporting", "Beans sun-dried to 12% moisture", "Ideal moisture level reached, ready for export.");
 
     await increaseTimeAndMine(10, 8, 45); // Export preparation & shipment delay (10 days, 8 hours, 45 min)
-    await batch_1.updateBatch(7, "Brazil Port", "Exporter", "Drying", "Roasting", "Beans exported to the UK", "Shipment loaded and en route to roastery.");
+    await batch_1.updateBatch(487, "Brazil Port", "Exporter", "Drying", "Roasting", "Beans exported to the UK", "Shipment loaded and en route to roastery.");
 
     await increaseTimeAndMine(21, 7, 5); // Shipping time (21 days, 7 hours, 5 min)
-    await batch_1.updateBatch(7, "London, UK", "Roaster", "Exporting", "Packaging", "Beans roasted to a light profile", "Optimal flavour developed after test batches.");
+    await batch_1.updateBatch(485, "London, UK", "Roaster", "Exporting", "Packaging", "Beans roasted to a light profile", "Optimal flavour developed after test batches.");
 
     await increaseTimeAndMine(5, 3, 55); // Short time between roasting and packaging (5 days, 3 hours, 55 min)
-    await batch_1.updateBatch(7, "London, UK", "Packaging Specialist", "Roasting", "Distribution", "Packaged and sealed", "Vacuum-sealed to maintain freshness.");
+    await batch_1.updateBatch(482, "London, UK", "Packaging Specialist", "Roasting", "Distribution", "Packaged and sealed", "Vacuum-sealed to maintain freshness.");
 
     await increaseTimeAndMine(7, 6, 40); // Distribution logistics (7 days, 6 hours, 40 min)
-    await batch_1.updateBatch(7, "London, UK", "Distributor", "Packaging", "Consumer", "Delivered to retailer", "Stock now available for sale.");
+    await batch_1.updateBatch(482, "London, UK", "Distributor", "Packaging", "Consumer", "Delivered to retailer", "Stock now available for sale.");
 
     console.log("Batch updates completed with realistic timestamps.");
 }

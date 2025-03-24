@@ -1,11 +1,11 @@
 const SupplyChain = require('../models/supplyChainModel');
+const Batch = require('../models/batchModel');
 
-
+// creates new supply chain
 const newSupplyChain = async (req, res) => {
     const { supply_chain_id } = req.body;
 
     try {
-
         // validation checks
         const exists = await SupplyChain.findOne({ supply_chain_id });
         if (exists) {
@@ -21,6 +21,7 @@ const newSupplyChain = async (req, res) => {
     }
 }
 
+// checks if supply chain exsists
 const doesSupplyChainExist = async (supply_chain_id) => {
     try {
         const exists = await SupplyChain.exists({ supply_chain_id });
@@ -31,6 +32,20 @@ const doesSupplyChainExist = async (supply_chain_id) => {
     }
 };
 
+const getSupplyChainID = async (req, res) => {
+    const { smart_contract_address } = req.params; // Retrieve from route params
+    try {
+        // Find the batch based on the smart_contract_address
+        const batch = await Batch.findOne({ smart_contract_address });
 
+        if (batch) {
+            const supply_chain_id = batch.supply_chain_id;
+            res.status(200).json({ supply_chain_id });
 
-module.exports = { newSupplyChain, doesSupplyChainExist };
+        }
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+module.exports = { newSupplyChain, doesSupplyChainExist, getSupplyChainID };

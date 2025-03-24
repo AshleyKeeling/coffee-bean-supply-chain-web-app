@@ -2,14 +2,14 @@ const express = require('express');
 const requireAuth = require('../middleware/requireAuth');
 
 // controller
-const { newSupplyChain } = require('../controllers/supplyChainController');
+const { newSupplyChain, getSupplyChainID } = require('../controllers/supplyChainController');
 
 const router = express.Router();
 
-// this middleware is used before all below routes
-router.use(requireAuth);
+// new supply chain (requires auth)
+router.post('/new', requireAuth, newSupplyChain);
 
-// new supply chain
-router.post('/new', newSupplyChain);
+// get supply chain ID from batch using smart contract address (no auth required)
+router.get('/:smart_contract_address', getSupplyChainID);
 
 module.exports = router;

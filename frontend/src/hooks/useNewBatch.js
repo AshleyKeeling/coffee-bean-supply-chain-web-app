@@ -39,7 +39,7 @@ export const useNewBatch = () => {
             const response = await fetch('/api/batch/new', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` },
-                body: JSON.stringify({ smart_contract_address, supply_chain_id, origin, batch_quantity, processing_type, roasting_type, bean_type, participant_addresses })
+                body: JSON.stringify({ smart_contract_address, supply_chain_id, batch_quantity, participant_addresses })
             });
 
             const json = await response.json();

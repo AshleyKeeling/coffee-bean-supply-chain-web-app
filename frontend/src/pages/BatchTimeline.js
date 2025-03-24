@@ -15,11 +15,15 @@ import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 
 const BatchTimeline = () => {
+    const { user } = useAuthContext();
+
     const { smartContractAddress } = useParams(); // Get the contract address from the URL
 
+    const [supplyChainID, setSupplyChainID] = useState("");
     const [smartContractDetails, setSmartContractDetails] = useState("");
     const [smartContractUpdates, setSmartContractUpdates] = useState("");
 
@@ -29,13 +33,24 @@ const BatchTimeline = () => {
 
         const updates = await getBatchUpdates(smartContractAddress);
         setSmartContractUpdates(updates);
-
-        console.log("herere" + await smartContractUpdates)
     }
-
 
     useEffect(() => {
         getSmartContractData();
+        const getSupplyChainID = async () => {
+            const response = await fetch(`/api/supplyChain/${smartContractAddress}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                const json = await response.json();
+                console.log(json);
+                setSupplyChainID(json.supply_chain_id);
+            }
+        };
+        getSupplyChainID()
+
         // eslint-disable-next-line 
     }, [smartContractAddress]);
 
@@ -85,7 +100,6 @@ const BatchTimeline = () => {
             });
     };
 
-
     return (
         <div>
             <div className="main-content">
@@ -93,7 +107,7 @@ const BatchTimeline = () => {
                     <span className="col-12 col-md-3">
                         <BackButton />
                     </span>
-                    <h1 className="col-12 col-md-8 heading-1-size">Supply Chain: xx-xx-xx</h1>
+                    <h1 className="col-12 col-md-8 heading-1-size">Supply Chain: {supplyChainID}</h1>
                 </div>
 
                 <div className="heading-4-size primary-colour text-md-center text-md-start">

@@ -89,7 +89,7 @@ export async function createNewSmartContract(
         const initialUpdateArray = [
             batch_quantity,
             location,
-            "Farmer",
+            "Manager",
             "N/A", // prevouis stage doesnt exist yet
             "Cultivation",
             "Batch created",

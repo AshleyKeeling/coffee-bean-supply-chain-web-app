@@ -14,7 +14,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 
-
 const BatchTimeline = () => {
     const { smartContractAddress } = useParams(); // Get the contract address from the URL
     const [supplyChainID, setSupplyChainID] = useState("");
@@ -33,7 +32,6 @@ const BatchTimeline = () => {
         getSmartContractData();
         const getSupplyChainID = async () => {
             const response = await fetch(`/api/supplyChain/${smartContractAddress}`, {
-                method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             });
 
@@ -120,7 +118,7 @@ const BatchTimeline = () => {
                         <p className='body-size'>By tracking your coffee here, you can see where it has been, who has handled it, and its status through the supply chain. This ensures authenticity, fair sourcing, and consumer trust in every batch.</p>
 
                         {/* only displays if batch is complete */}
-                        {smartContractUpdates == 9 ? (
+                        {smartContractUpdates.length == 9 ? (
                             <p className='body-size'>This batch of <strong>{smartContractUpdates[8]?.batch_quantity} Arabica coffee beans bags</strong> originated from <strong>{smartContractDetails[0]?.origin}</strong> and moved through the supply chain from <strong>{shortFormatTimestamp(smartContractDetails[0]?.creation_date)}</strong> to <strong>{shortFormatTimestamp(smartContractUpdates[smartContractUpdates.length - 1]?.timestamp)}</strong>. It was processed using the <strong>{smartContractDetails[0]?.processing_type}</strong> processing method and roasted to a <strong>{smartContractDetails[0]?.roasting_type} profile</strong> in <strong>{smartContractUpdates[6]?.location}</strong>. The supply chain stages were securely recorded on the <strong>Ethereum blockchain</strong>. The batch started with <strong>{smartContractUpdates[1]?.batch_quantity} </strong> bags and ended with <strong>{smartContractUpdates[8]?.batch_quantity} </strong> bags due to losses during the supply chain. The batch was delivered to retailers on <strong>{shortFormatTimestamp(smartContractUpdates[8]?.timestamp)}</strong> for consumer purchase.</p>
                         ) : (<p></p>)}
 

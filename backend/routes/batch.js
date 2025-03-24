@@ -6,22 +6,19 @@ const { verifyBatchDetails, newBatch, getAllBatches, getBatch, updateBatch } = r
 
 const router = express.Router();
 
-// this middleware is used before all below routes
-router.use(requireAuth);
-
 // verifiy details
-router.post('/verify', verifyBatchDetails);
+router.post('/verify', requireAuth, verifyBatchDetails);
 
 // new batch
-router.post('/new', newBatch);
+router.post('/new', requireAuth, newBatch);
 
 // get all batches
-router.get('/all', getAllBatches);
+router.get('/all', requireAuth, getAllBatches);
 
 // gets batch
-router.get('/:smart_contract_address', getBatch);
+router.get('/:smart_contract_address', requireAuth, getBatch);
 
 // update batch
-router.patch('/update', updateBatch)
+router.patch('/update', requireAuth, updateBatch)
 
 module.exports = router;

@@ -37,11 +37,9 @@ const getSupplyChainID = async (req, res) => {
     try {
         // Find the batch based on the smart_contract_address
         const batch = await Batch.findOne({ smart_contract_address });
-
         if (batch) {
             const supply_chain_id = batch.supply_chain_id;
             res.status(200).json({ supply_chain_id });
-
         }
 
     } catch (error) {

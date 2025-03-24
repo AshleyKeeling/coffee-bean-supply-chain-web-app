@@ -1,4 +1,6 @@
 const Product = require('../models/productModel');
+
+// creates new product in MongoDB
 const newProduct = async (data) => {
     const { product_id, smart_contract_address, supply_chain_id, status } = data;
 
@@ -18,4 +20,5 @@ const newProduct = async (data) => {
         throw error;
     }
 };
+
 module.exports = { newProduct };

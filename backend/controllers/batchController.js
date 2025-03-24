@@ -8,7 +8,6 @@ const validator = require('validator');
 const verifyBatchDetails = async (req, res) => {
     const { origin, batch_quantity, processing_type, roasting_type, bean_type, supply_chain_id, participant_addresses } = req.body;
     try {
-        console.log("herererere")
         // validation checks
         // check particiapnt addresses contains 9 roles
         if (Object.values({ origin, batch_quantity, processing_type, roasting_type, bean_type, supply_chain_id, participant_addresses }).some(val => !val)) {
@@ -27,7 +26,6 @@ const verifyBatchDetails = async (req, res) => {
             return res.status(400).json({ error: "Supply Chain ID does not exist, please create one" });
         }
 
-        console.log("here")
         res.status(200).json({ message: "verify sucess" });
 
     } catch (error) {
@@ -35,9 +33,10 @@ const verifyBatchDetails = async (req, res) => {
     }
 }
 
+// creates new batch in mongoDB
 const newBatch = async (req, res) => {
-    const { origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses } = req.body;
-    console.log(origin, batch_quantity, processing_type, roasting_type, bean_type, smart_contract_address, supply_chain_id, participant_addresses)
+    const { batch_quantity, smart_contract_address, supply_chain_id, participant_addresses } = req.body;
+
     try {
         const exists = await Batch.findOne({ smart_contract_address });
 
@@ -58,8 +57,6 @@ const newBatch = async (req, res) => {
                 status: "In-Progress"
             };
 
-
-            // Call`newProduct`, but don't send `res`
             const product = await newProduct(productData);
             products.push(product);
         }
@@ -69,10 +66,10 @@ const newBatch = async (req, res) => {
     }
 }
 
+// finds all batches that the user is associated with
 const getAllBatches = async (req, res) => {
     console.log(req.user);
 
-    // finds all batches that the user is associated with
     try {
         const userEthereumAddress = req.user.ethereum_address
 
@@ -99,7 +96,6 @@ const getBatch = async (req, res) => {
     try {
         const batch = await Batch.find({ smart_contract_address });
         const products = await Product.find({ smart_contract_address })
-
 
         console.log(batch, products)
         res.status(200).json(batch, products);

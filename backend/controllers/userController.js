@@ -76,8 +76,6 @@ const signinUser = async (req, res) => {
             return res.status(400).json({ error: "Incorrect Password" });
         }
 
-        const userRole = user.role;
-
         // create JWT token
         const token = createToken(user._id);
 

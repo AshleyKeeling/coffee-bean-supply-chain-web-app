@@ -37,7 +37,6 @@ const TimelineCard = ({ stageNumber, stageName, startDate, endDate, currentHolde
                     The particiapnt, identified by Ethereum address <strong>{participantAddress}</strong>, reported <strong>'{additionalNotes}'</strong>.
                 </p>
             </div>
-
         </li>
     )
 }

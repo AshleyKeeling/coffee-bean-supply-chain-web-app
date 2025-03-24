@@ -1,9 +1,9 @@
 import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
-import ParticipantBatchDetails from "../components/ParticipantBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
 import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
+import ParticipantBatchDetails from "../components/ParticipantBatchDetails";
 
 const ParticipantDashboard = () => {
     const { user } = useAuthContext();

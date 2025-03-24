@@ -8,12 +8,10 @@ const NewSupplyChain = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         await newSupplyChain(supplyChainId);
     }
 
     return (
-
         <div className="main-content">
             <div className="row my-5 g-0 align-items-center">
                 <span className="col-12 col-md-3">
@@ -35,13 +33,10 @@ const NewSupplyChain = () => {
                             placeholder="e.g SC-000-25"
                         />
                     </div>
-                    {/* <button className="button border-0 tertiary-bg text-white rounded text-center py-3 w-100">Create New Supply Chain</button> */}
-
                     <button disabled={isLoading} className="button border-0 tertiary-bg text-white rounded text-center py-3 w-100">Create New Supply Chain</button>
                     {error && <div className="error">{error}</div>}
                 </form>
             </div>
-
         </div>
     )
 }

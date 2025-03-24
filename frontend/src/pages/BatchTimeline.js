@@ -1,8 +1,6 @@
 import coffeeSupplyChain from '../assets/images/coffeeSupplyChain.png';
 import BackButton from "../components/BackButton";
 import TimelineCard from '../components/TimelineCard';
-
-// icons
 import cultivationIcon from '../assets/icons/cultivationIcon.png';
 import harvestingIcon from '../assets/icons/harvestingIcon.png';
 import processingIcon from '../assets/icons/processingIcon.png';
@@ -13,16 +11,12 @@ import packagingIcon from '../assets/icons/packagingIcon.png';
 import distributionIcon from '../assets/icons/distributionIcon.png';
 import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
-import { useAuthContext } from '../hooks/useAuthContext';
 
 
 const BatchTimeline = () => {
-    const { user } = useAuthContext();
-
     const { smartContractAddress } = useParams(); // Get the contract address from the URL
-
     const [supplyChainID, setSupplyChainID] = useState("");
     const [smartContractDetails, setSmartContractDetails] = useState("");
     const [smartContractUpdates, setSmartContractUpdates] = useState("");
@@ -91,6 +85,7 @@ const BatchTimeline = () => {
         { name: "Distribution", key: "distributor", icon: distributionIcon }
     ];
 
+    // converts date(number) to a short formatted date(xx/xx/xx)
     const shortFormatTimestamp = (timestamp) => {
         return new Date(Number(timestamp) * 1000)
             .toLocaleString("en-GB", {
@@ -138,9 +133,6 @@ const BatchTimeline = () => {
             <hr />
             <h2 className='text-center heading-2-size'>Timeline</h2>
             <div id='timeline-content'>
-
-
-
                 {smartContractUpdates?.length > 0 ? (
                     <ul>
                         {stages.map((stage, index) => {
@@ -210,8 +202,6 @@ const BatchTimeline = () => {
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     )

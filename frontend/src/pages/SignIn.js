@@ -1,9 +1,7 @@
 import { useState } from "react"
-// import { useSignup } from "../Hooks/useSignup";
-
-import coffeeSupplyChain from '../assets/images/coffeeSupplyChain.png';
 import { Link } from "react-router-dom";
 import { useSignin } from "../hooks/useSignin";
+import coffeeSupplyChain from '../assets/images/coffeeSupplyChain.png';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +11,6 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         await signin(email, password);
     }
 

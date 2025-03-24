@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-
 import SupplyChainStageDetails from "../components/SupplyChainStageDetails";
-
-// json
 import supplyChainDataJSON from "../assets/json/supplyChainOverviewDetails.json";
 
-
 const SupplyChainOverview = () => {
-
     const [supplyChainStagesData] = useState(supplyChainDataJSON);
 
     // creates 'supply chain stage details' for each stage from json file

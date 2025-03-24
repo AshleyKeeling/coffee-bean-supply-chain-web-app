@@ -1,10 +1,10 @@
-import BackButton from "../components/BackButton";
 import { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
-import React from "react";
 import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useUpdateBatch } from "../hooks/useUpdateBatch";
+import BackButton from "../components/BackButton";
+import React from "react";
 
 const UpdateBatch = () => {
     const [currentLocation, setCurrentLocation] = useState('');
@@ -25,7 +25,6 @@ const UpdateBatch = () => {
     const { user } = useAuthContext();
 
     const [isOpen, setIsOpen] = useState(false);
-
 
     const getSmartContractData = async (smart_contract_address) => {
         const details = await getBatchDetails(smart_contract_address)
@@ -81,7 +80,6 @@ const UpdateBatch = () => {
                 hour12: false, // Ensures 24-hour format
             });
     };
-
 
     const stages = [
         "Cultivation",
@@ -259,12 +257,10 @@ const UpdateBatch = () => {
                     )}
                     <hr style={{ border: "none", borderTop: "2px solid white", opacity: 1 }} className="mx-3" />
 
-
                     <button disabled={isLoading} className="button border-0 tertiary-bg text-white rounded text-center py-3 w-100">Update Batch</button>
                     {error && <div className="error">{error}</div>}
                 </form>
             </div>
-
         </div>
     )
 }

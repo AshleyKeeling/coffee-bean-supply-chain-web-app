@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { useSignup } from "../hooks/useSignup";
-
-import coffeeOutside from '../assets/images/coffeeOutside.jpg';
 import { Link } from "react-router-dom";
+import coffeeOutside from '../assets/images/coffeeOutside.jpg';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -16,7 +15,6 @@ const SignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         await signup(email, password, confirmPassword, roleType, ethereumAddress);
     }
 

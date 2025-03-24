@@ -1,8 +1,8 @@
 import { Form, InputGroup, Button } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import SupplyChainStageCard from '../components/SupplyChainStageCard';
-
-// images 
 import logo from '../assets/images/logo.png';
 import ethLogo from '../assets/images/ethLogo.png';
 import cultivation from '../assets/images/cultivation.jpeg';
@@ -13,10 +13,6 @@ import exporting from '../assets/images/exporting.jpeg';
 import roasting from '../assets/images/roasting.jpeg';
 import packaging from '../assets/images/packaging.jpeg';
 import distribution from '../assets/images/distribution.jpeg';
-import { Link } from "react-router-dom";
-import { useState } from "react";
-
-
 
 const ConsumerHome = () => {
     const [searchQuery, setSearchQuery] = useState(""); // Track the input value

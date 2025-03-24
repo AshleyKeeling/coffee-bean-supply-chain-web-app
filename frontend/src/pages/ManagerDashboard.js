@@ -1,10 +1,10 @@
 import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import ManagerBatchDetails from "../components/ManagerBatchDetails";
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
 import { getBatchDetails, getBatchUpdates } from "../utils/BatchFactory";
+import ManagerBatchDetails from "../components/ManagerBatchDetails";
 
 const ManagerDashboard = () => {
     const [batches, setBatches] = useState([]);
@@ -127,8 +127,6 @@ const ManagerDashboard = () => {
             ) : (
                 <p>No batches created yet</p>
             )}
-
-
         </div>
     );
 };

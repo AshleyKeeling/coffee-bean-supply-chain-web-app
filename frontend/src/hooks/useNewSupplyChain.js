@@ -8,7 +8,6 @@ export const useNewSupplyChain = () => {
     const navigate = useNavigate();
     const { user } = useAuthContext();
 
-
     const newSupplyChain = async (supply_chain_id) => {
         setIsLoading(true);
         setError(null);

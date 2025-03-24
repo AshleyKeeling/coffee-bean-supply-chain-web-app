@@ -1,13 +1,9 @@
 import { Link } from "react-router-dom"
 import SlideShow from "../components/SlideShow";
-
 import WhatIsProvidedCard from "../components/WhatIsProvidedCard";
-
 import participanthomePageDetailsJSON from "../assets/json/participantHomePageDetails.json";
 
-
 const ParticipantHome = () => {
-
     // creates 'card' for each detail from json file
     const ParticipantHomePageDetails = participanthomePageDetailsJSON.details.map((detail, index) => (
         <div className="col-12 col-md-6 col-lg-3" key={index}>

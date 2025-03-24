@@ -3,7 +3,7 @@ import React from 'react';
 
 const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creationDate, latestUpdate, previousCurrentHolder, userRole }) => {
 
-    const stages = [
+    const particiapntTypes = [
         "Farmer",
         "Harvestor",
         "Processor",
@@ -16,8 +16,8 @@ const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creat
 
     let state = "";
 
-    const previousCurrentHolderIndex = stages.indexOf(previousCurrentHolder);
-    const userRoleIndex = stages.indexOf(userRole);
+    const previousCurrentHolderIndex = particiapntTypes.indexOf(previousCurrentHolder);
+    const userRoleIndex = particiapntTypes.indexOf(userRole);
 
     // works out if user is applicable for updating the batch.
     if (userRoleIndex <= previousCurrentHolderIndex) {
@@ -26,10 +26,7 @@ const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creat
         state = "update";
     } else {
         state = "Not ready for update yet";
-
     }
-
-    console.log(state)
 
     return (
         <div className="primary-bg rounded p-2 mb-2">
@@ -98,11 +95,8 @@ const ParticipantBatchDetails = ({ progress, batch, status, batchQuantity, creat
                             </div>
                         )
                     }
-
-
                 </div>
             </div>
-
         </div>
     )
 }

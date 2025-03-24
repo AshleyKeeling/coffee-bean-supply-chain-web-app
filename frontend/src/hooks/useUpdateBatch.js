@@ -40,10 +40,6 @@ export const useUpdateBatch = () => {
             setIsLoading(false);
             setError("Error with smart contract update")
         }
-
-
-
     }
-
     return { updateSmartContract, error, isLoading }
 }

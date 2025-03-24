@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNewBatch } from "../hooks/useNewBatch";
 import { useAuthContext } from '../hooks/useAuthContext';
 
-
 const NewBatch = () => {
     const [supplyChainId, setSupplyChainID] = useState('');
     const [origin, setOrigin] = useState('');
@@ -40,8 +39,6 @@ const NewBatch = () => {
             { role: "Packaging Specialist", ethereum_address: packagingSpecialistAddress },
             { role: "Distributor", ethereum_address: distributorAddress }
         ];
-
-
         await newBatch(supplyChainId, origin, batchQuantity, processingType, roastingType, beanType, participant_Addresses)
     }
 
@@ -241,7 +238,6 @@ const NewBatch = () => {
                     {error && <div className="error">{error}</div>}
                 </form>
             </div>
-
         </div>
     )
 }

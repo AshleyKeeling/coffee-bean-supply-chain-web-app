@@ -24,6 +24,14 @@ async function main() {
     await batch_2.waitForDeployment();
     console.log("Batch 2 deployed to:", await batch_2.getAddress());
 
+    // batch 3 creation and deployment
+    const batch_3_Details = ["SC-001-25", Math.floor(Date.now() / 1000), "South-west Ethiopia", "Liberica", "Medium-Dark", "Natural"];
+    const batch_3_initial_update = [14, "South-west Ethiopia Farm", "Manager", "N/A", "Cultivation", "Batch Created", "Initial batch creation", Math.floor(Date.now() / 1000)];
+    const Batch_3 = await ethers.getContractFactory("Batch");
+    const batch_3 = await Batch_3.deploy(batch_3_Details, participants, batch_3_initial_update);
+    await batch_3.waitForDeployment();
+    console.log("Batch 3 deployed to:", await batch_3.getAddress());
+
     // function to artificially increase time between updates
     async function increaseTimeAndMine(days, hours = 0, minutes = 0) {
         const timeIncrement = (days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60); // Convert to seconds
@@ -56,8 +64,34 @@ async function main() {
     await increaseTimeAndMine(7, 6, 40);
     await batch_1.updateBatch(29, "London, UK", "Distributor", "Packaging", "Consumer", "Delivered to retailer", "Stock now available for sale.");
 
+    // batch 2 first update
     await increaseTimeAndMine(90, 3, 25);
     await batch_2.updateBatch(26, "Kenya Farm", "Farmer", "N/A", "Harvesting", "All Crops have matured", "The weather was mostly perfect conditions");
+
+    // Simulate realistic supply chain timeline for Batch 3
+    await increaseTimeAndMine(85, 7, 10);
+    await batch_3.updateBatch(14, "South-west Ethiopia Farm", "Farmer", "N/A", "Harvesting", "Cherries fully matured and ready for harvest", "Good rainfall contributed to excellent growth.");
+
+    await increaseTimeAndMine(5, 4, 20);
+    await batch_3.updateBatch(14, "South-west Ethiopia Farm", "Harvester", "Cultivation", "Processing", "Cherries harvested and sorted", "Only ripe cherries were selected for quality.");
+
+    await increaseTimeAndMine(3, 2, 40);
+    await batch_3.updateBatch(13, "South-west Ethiopia Farm", "Processor", "Harvesting", "Drying", "Cherries spread out for sun-drying", "Traditional raised-bed drying method used.");
+
+    await increaseTimeAndMine(15, 6, 30);
+    await batch_3.updateBatch(13, "South-west Ethiopia Farm", "Drying Specialist", "Processing", "Exporting", "Cherries dried to optimal moisture level", "Hand-turned regularly for even drying.");
+
+    await increaseTimeAndMine(12, 8, 15);
+    await batch_3.updateBatch(13, "Addis Ababa, Ethiopia", "Exporter", "Drying", "Roasting", "Beans shipped to France", "Secured in humidity-controlled containers.");
+
+    await increaseTimeAndMine(22, 7, 45);
+    await batch_3.updateBatch(12, "Paris, France", "Roaster", "Exporting", "Packaging", "Beans roasted to a Medium-Dark profile", "Flavor development optimized for natural processing.");
+
+    await increaseTimeAndMine(6, 5, 50);
+    await batch_3.updateBatch(12, "Paris, France", "Packaging Specialist", "Roasting", "Distribution", "Beans packaged and sealed", "Stored in airtight bags to preserve aroma.");
+
+    await increaseTimeAndMine(10, 6, 35);
+    await batch_3.updateBatch(12, "Paris, France", "Distributor", "Packaging", "Consumer", "Beans delivered to specialty coffee shops", "Now available for retail customers.");
 
     console.log("Batch updates completed with realistic timestamps.");
 }

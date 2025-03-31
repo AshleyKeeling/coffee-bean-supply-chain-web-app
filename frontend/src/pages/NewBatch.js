@@ -234,7 +234,7 @@ const NewBatch = () => {
                         />
                     </div>
 
-                    <button disabled={isLoading} className="button border-0 tertiary-bg text-white rounded text-center py-3 w-100">Create New Supply Chain</button>
+                    <button disabled={isLoading} className="button border-0 tertiary-bg text-white rounded text-center py-3 w-100">Create New Batch</button>
                     {error && <div className="error">{error}</div>}
                 </form>
             </div>
